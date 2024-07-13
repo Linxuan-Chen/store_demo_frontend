@@ -1,0 +1,56 @@
+@import '../../styles/variables';
+
+.navBarTop {
+  margin-top: 3px;
+  height: 55px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .storeLogo {
+    height: 100%;
+    width: 8%;
+    min-width: 130px;
+    justify-self: start;
+    left: 0;
+  }
+  .address {
+    width: 15%;
+  }
+  .search {
+    flex-grow: 1;
+  }
+  .clickBox {
+    width: 90px;
+    height: 100%;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 4px;
+    border: 2px solid transparent;
+    &:hover {
+      cursor: pointer;
+      border: 2px solid black;
+      color: black;
+    }
+    .cart {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      .cartTextContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        .cartText {
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@import '../../../styles/_variables.scss';
+
+.shoppingCartIcon {
+    font-size: 2.5rem !important; 
+}
+.shoppingCartNumber {
+    position: absolute;
+    top: 10px;
+    color: $orange;
+    font-weight: bold;
+    right: 71px
+}
