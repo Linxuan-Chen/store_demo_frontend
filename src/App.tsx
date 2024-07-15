@@ -1,14 +1,17 @@
 import React from 'react';
-import styles from './styles/App.module.scss';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes/index';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 function App() {
-  return (
-    <div className={styles.test}>
-      <RouterProvider router={router} />
-    </div>
-  );
+    return (
+        <React.StrictMode>
+            <Provider store={store}>
+                <RouterProvider router={router} />
+            </Provider>
+        </React.StrictMode>
+    );
 }
 
 export default App;
