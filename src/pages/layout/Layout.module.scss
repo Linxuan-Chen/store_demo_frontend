@@ -31,6 +31,17 @@
     .search {
         flex-grow: 1;
     }
+    .account {
+        height: 100%;
+        .accountButton {
+            border: 1px solid transparent;
+            height: 100%;
+            white-space: break-spaces;
+            &:hover {
+                border: 1px solid $dark-gray;
+            }
+        }
+    }
     .clickBox {
         width: 90px;
         height: 100%;
@@ -40,9 +51,10 @@
         display: flex;
         justify-content: center;
         align-items: flex-end;
+        border: 1px solid transparent;
         &:hover {
             cursor: pointer;
-            border-color: $dark-gray;
+            border: 1px solid $dark-gray;
         }
         .cart {
             width: 100%;

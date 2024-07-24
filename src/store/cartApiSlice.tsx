@@ -1,32 +1,25 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import BASE_URL from '../config';
-
-interface CartItemCount {
-    count: Number;
-}
-
-interface CreateNewCart {
-    id: string;
-}
+import type { CartItemCount, CreateNewCart } from '../types/api/cartApiTypes';
 
 const cartApiSlice = createApi({
-    reducerPath: 'api',
+    reducerPath: 'cartApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `${BASE_URL}/store/`,
+        baseUrl: '/api/store/',
+        credentials: 'include',
     }),
     endpoints: (builder) => ({
-        getCartItemCount: builder.query<CartItemCount, string>({
-            query: (id) => `cart/${id}/items/count/`,
+        getCartItemCount: builder.query<CartItemCount, string | null>({
+            query: (id) => `/cart/${id}/items/count/`,
         }),
-        createNewCart: builder.mutation<CreateNewCart, Object>({
+        createNewCart: builder.mutation<CreateNewCart, void>({
             query: () => ({
-                url: 'cart/',
+                url: '/cart/',
                 method: 'POST',
-                payload: {},
             }),
         }),
     }),
 });
 
-export const { useGetCartItemCountQuery, useCreateNewCartMutation } = cartApiSlice;
+export const { useGetCartItemCountQuery, useCreateNewCartMutation } =
+    cartApiSlice;
 export default cartApiSlice;
