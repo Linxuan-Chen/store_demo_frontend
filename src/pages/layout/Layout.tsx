@@ -10,12 +10,11 @@ import {
 } from '../../store/cartApiSlice';
 import {
     useGetUserStatusQuery,
-    useLoginMutation,
     useRefreshTokenMutation,
     useLogoutMutation,
-    useMergeCartMutation,
 } from '../../store/accountApiSlice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { Box, Link } from '@mui/material';
 
 export default function Layout() {
     const navigate = useNavigate();
@@ -37,9 +36,7 @@ export default function Layout() {
         },
     ] = useCreateNewCartMutation();
     const [refreshToken] = useRefreshTokenMutation();
-    const [login] = useLoginMutation();
     const [logout] = useLogoutMutation();
-    const [mergeCart] = useMergeCartMutation();
     const {
         data: userStatus,
         error: userStatusError,
@@ -129,7 +126,7 @@ export default function Layout() {
             setWelcomeMsg(
                 `Hello,\n ${
                     userStatus && !userStatusError
-                        ? userStatus.first_name
+                        ? userStatus.first_name || 'Client'
                         : 'please sign in'
                 }`
             );
@@ -148,33 +145,21 @@ export default function Layout() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const handleSignInTest = () => {
-        login({
-            password: '940620Chen!',
-            username: 'linxuanchen2017@gmail.com',
-            keep_me_signed_in: false,
-        })
-            .unwrap()
-            .then(() => {
-                mergeCart({
-                    anonymous_cart_id: localStorage.getItem('cart_id'),
-                })
-                    .unwrap()
-                    .then((data) => {
-                        localStorage.setItem('cart_id', data.anonymous_cart_id);
-                    })
-                    .finally(() => {
-                        refetchUserStatus();
-                    });
-            });
-    };
-    const handleSignOutTest = async () => {
+    const handleSignOut = async () => {
+        handleClose();
         logout()
             .unwrap()
             .then(() => {
                 setIsLoggedIn(false);
                 createNewCart();
-            }).catch(() => {});
+                refetchUserStatus();
+                navigate('/')
+            })
+            .catch(() => {});
+    };
+    const handleSignIn = () => {
+        handleClose();
+        navigate('/login/');
     };
 
     useEffect(() => {
@@ -187,7 +172,7 @@ export default function Layout() {
 
     return (
         <>
-            <nav className={styles.navBarTop}>
+            <Box component='nav' className={styles.navBarTop}>
                 <Button
                     className={styles.logoContainer}
                     onClick={() => navigate('/')}
@@ -219,18 +204,14 @@ export default function Layout() {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleSignInTest}>Sign in</MenuItem>
-                        <MenuItem onClick={handleSignOutTest}>
-                            Sign Out
-                        </MenuItem>
+                        <MenuItem onClick={handleSignIn}>Sign in</MenuItem>
+                        <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
                     </Menu>
                 </div>
                 <Button
                     className={styles.clickBox}
                     onClick={() => {
-                        console.log(cartId, isLoggedIn);
-
-                        // navigate(`/cart/${cartId}/`)
+                        navigate(`/cart/${cartId}/`);
                     }}
                     disabled={isCreateCartError || isCreateCartLoading}
                 >
@@ -241,8 +222,33 @@ export default function Layout() {
                         </div>
                     </div>
                 </Button>
-            </nav>
-            <Outlet />
+            </Box>
+            <Box className={styles.main}>
+                <Outlet />
+            </Box>
+            <Box component='footer' className={styles.footer}>
+                <p>
+                    This project is a demo store, you can view front-end source
+                    code{' '}
+                    <Link
+                        href='https://github.com/Linxuan-Chen/store_demo_frontend'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        underline='hover'
+                    >
+                        here
+                    </Link>
+                    , or back-end source code{' '}
+                    <Link
+                        href='https://github.com/Linxuan-Chen/store_demo_backend'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        underline='hover'
+                    >
+                        here
+                    </Link>
+                </p>
+            </Box>
         </>
     );
 }

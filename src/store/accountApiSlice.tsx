@@ -4,6 +4,8 @@ import type {
     UserLoginPayload,
     MergeCartResponse,
     MergeCartPayload,
+    CheckUsernameAvailabilityResponse,
+    UserSignUpPayload,
 } from '../types/api/accountApiTypes';
 
 const loginApiSlice = createApi({
@@ -42,14 +44,35 @@ const loginApiSlice = createApi({
                 body: payload,
             }),
         }),
+        checkUsernameAvailablility: builder.query<
+            CheckUsernameAvailabilityResponse,
+            string
+        >({
+            query: (username) => ({
+                url: 'check/',
+                params: {
+                    username: username,
+                },
+            }),
+        }),
+        userSignUp: builder.mutation<void, UserSignUpPayload>({
+            query: (payload) => ({
+                url: 'sign-up/',
+                method: 'POST',
+                body: payload,
+            }),
+        }),
     }),
 });
 
 export const {
     useGetUserStatusQuery,
+    useLazyGetUserStatusQuery,
     useLoginMutation,
     useLogoutMutation,
     useRefreshTokenMutation,
     useMergeCartMutation,
+    useLazyCheckUsernameAvailablilityQuery,
+    useUserSignUpMutation
 } = loginApiSlice;
 export default loginApiSlice;

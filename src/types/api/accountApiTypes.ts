@@ -16,3 +16,17 @@ export interface MergeCartResponse {
 export interface MergeCartPayload {
     anonymous_cart_id: string | null;
 }
+
+export interface UserSignUpPayload {
+    username: string;
+    password: string;
+    repeat_password: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+}
+
+export interface CheckUsernameAvailabilityResponse {
+    is_available: boolean;
+    message: string;
+}

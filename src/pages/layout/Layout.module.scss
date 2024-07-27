@@ -1,8 +1,7 @@
 @import '../../styles/variables';
 
 .navBarTop {
-    margin-top: 3px;
-    height: 55px;
+    height: $top-nav-height;
     font-size: 1rem;
     display: flex;
     justify-content: space-around;
@@ -26,10 +25,10 @@
         }
     }
     .address {
-        width: 15%;
+        flex: 1 1 15%
     }
     .search {
-        flex-grow: 1;
+        flex: 1 1 55%
     }
     .account {
         height: 100%;
@@ -73,5 +72,21 @@
                 }
             }
         }
+    }
+}
+
+.main {
+    flex-grow: 1;
+}
+
+.footer {
+    height: $bottom-footer-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $brown;
+    p {
+        text-align: center;
+        color: $white
     }
 }
