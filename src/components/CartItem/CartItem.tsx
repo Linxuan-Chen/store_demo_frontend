@@ -11,7 +11,6 @@ import {
     Divider,
     Button,
     IconButton,
-    Popover,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -23,6 +22,7 @@ import {
     useDeleteCartItemMutation,
 } from '../../store/cartApiSlice';
 import { debounce } from 'lodash';
+import Popover from '../Popover/Popover';
 
 interface CartItemProps {
     itemInfo: CartItemTypes;
@@ -37,7 +37,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     const open = Boolean(anchorEl);
     const [quantity, setQuantity] = useState(props.itemInfo.quantity);
     const handleClickProduct = () => {
-        console.log(props.itemInfo);
+        // console.log(props.itemInfo);
         // navigate()
     };
     const parseInventory = () => {
@@ -80,7 +80,6 @@ const CartItem: React.FC<CartItemProps> = (props) => {
             </Typography>
         );
     };
-    console.log(props.itemInfo);
     const handleQuantityChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -128,7 +127,14 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     };
 
     const handleConfirm = () => {
-        deleteCartItem({ cart_id: cartId || '', cart_item_id: props.itemInfo.id });
+        deleteCartItem({
+            cart_id: cartId || '',
+            cart_item_id: props.itemInfo.id,
+        });
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     return (
@@ -190,46 +196,15 @@ const CartItem: React.FC<CartItemProps> = (props) => {
                             vertical: 'top',
                             horizontal: 'right',
                         }}
-                        onClose={() => setAnchorEl(null)}
+                        handleConfirm={handleConfirm}
+                        handleClose={handleClose}
                         transformOrigin={{
                             vertical: 'bottom',
                             horizontal: 'left',
                         }}
-                    >
-                        <Typography sx={{ p: 1 }} variant='h4'>
-                            Warning
-                        </Typography>
-                        <Divider />
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                padding: 1,
-                            }}
-                        >
-                            <Typography>
-                                Are you sure you want to delete the product?
-                            </Typography>
-                            <Box
-                                sx={{
-                                    width: '100%',
-                                    display: 'flex',
-                                    justifyContent: 'flex-end',
-                                }}
-                            >
-                                <Button
-                                    color='warning'
-                                    size='small'
-                                    variant='text'
-                                    onClick={handleConfirm}
-                                >
-                                    Confirm
-                                </Button>
-                            </Box>
-                        </Box>
-                    </Popover>
+                        title='Delete Product?'
+                        body='Are you sure you want to delete the product?'
+                    />
                 </Box>
             </CardContent>
             <Typography variant='h6' sx={{ flex: '1 1 10%' }}>

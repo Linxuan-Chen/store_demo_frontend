@@ -39,3 +39,8 @@ export interface DeleteCartItemParams {
     cart_id: string;
     cart_item_id: number;
 }
+
+export interface BulkDeleteCartItemParams {
+    cart_id: string;
+    item_ids: readonly number[];
+}

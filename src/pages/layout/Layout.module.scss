@@ -25,10 +25,10 @@
         }
     }
     .address {
-        flex: 1 1 15%
+        flex: 1 1 15%;
     }
     .search {
-        flex: 1 1 55%
+        flex: 1 1 55%;
     }
     .account {
         height: 100%;
@@ -76,7 +76,9 @@
 }
 
 .main {
-    flex-grow: 1;
+    height: calc(
+        100vh - $bottom-footer-height - $top-nav-height - $tabular-nav-height
+    );
 }
 
 .footer {
@@ -87,6 +89,6 @@
     background-color: $brown;
     p {
         text-align: center;
-        color: $white
+        color: $white;
     }
 }

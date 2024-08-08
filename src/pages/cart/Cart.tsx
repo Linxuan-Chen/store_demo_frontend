@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { useGetCartInfoQuery } from '../../store/cartApiSlice';
+import {
+    useGetCartInfoQuery,
+    useBulkDeleteCartItemMutation,
+} from '../../store/cartApiSlice';
 import { useParams } from 'react-router-dom';
 import {
     Paper,
@@ -14,16 +17,24 @@ import {
     Toolbar,
     IconButton,
     Tooltip,
-    TableFooter,
+    Button,
+    Divider,
+    Box,
 } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import CartItem from '../../components/CartItem/CartItem';
+import { useNavigate } from 'react-router-dom';
+import Popover from '../../components/Popover/Popover';
 
 export default function Cart() {
     const { cart_id: cartId } = useParams();
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const open = Boolean(anchorEl);
     const [selected, setSelected] = useState<readonly number[]>([]);
     const { data: cartInfo } = useGetCartInfoQuery(cartId || '');
+    const [bulkDelete] = useBulkDeleteCartItemMutation();
+    const navigate = useNavigate();
 
     const handleTableCellCheckboxChange = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -64,8 +75,16 @@ export default function Cart() {
         }
     };
 
-    const handleBulkDelete = () => {
-        console.log(selected);
+    const handleBulkDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleBulkDeleteConfirm = () => {
+        bulkDelete({ cart_id: cartId || '', item_ids: selected });
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     return (
@@ -78,8 +97,8 @@ export default function Cart() {
                     lg: '60%',
                     xl: '50%',
                 },
+                paddingTop: '30px',
                 margin: 'auto',
-                marginTop: '30px',
             }}
         >
             <Typography variant='h4'>Shopping Cart</Typography>
@@ -100,19 +119,33 @@ export default function Cart() {
                             {selected.length} Selected
                         </Typography>
                         {selected.length > 0 && (
-                            <Tooltip title='Delete'>
-                                <IconButton
-                                    onClick={handleBulkDelete}
-                                    color='warning'
-                                >
-                                    <DeleteIcon />
-                                    <Typography>Delete Selected</Typography>
-                                </IconButton>
-                            </Tooltip>
+                            <IconButton
+                                onClick={handleBulkDelete}
+                                color='warning'
+                            >
+                                <DeleteIcon />
+                                <Typography>Delete Selected</Typography>
+                            </IconButton>
                         )}
+                        <Popover
+                            anchorEl={anchorEl}
+                            open={open}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            handleConfirm={handleBulkDeleteConfirm}
+                            handleClose={handleClose}
+                            transformOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            title='Bulk Delete Products?'
+                            body='Are you sure you want to bulk delete all selected products?'
+                        />
                     </Toolbar>
-                    <TableContainer>
-                        <Table>
+                    <TableContainer sx={{ height: '800px', overflow: 'auto' }}>
+                        <Table stickyHeader>
                             <TableHead>
                                 <TableRow>
                                     <TableCell padding='checkbox'>
@@ -137,20 +170,35 @@ export default function Cart() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>{renderCartItems()}</TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TableCell colSpan={2} align='right'>
-                                        <Typography variant='h5'>
-                                            Subtotal(
-                                            {cartInfo?.items.length || 0}{' '}
-                                            items): $
-                                            {cartInfo?.cart_total_price || 0}
-                                        </Typography>
-                                    </TableCell>
-                                </TableRow>
-                            </TableFooter>
                         </Table>
                     </TableContainer>
+                    <Divider></Divider>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Typography
+                            variant='h5'
+                            sx={{ paddingTop: 1, paddingBottom: 1 }}
+                        >
+                            Subtotal(
+                            {cartInfo?.items.length || 0} items): $
+                            {cartInfo?.cart_total_price || 0}
+                        </Typography>
+                    </Box>
+                    <Divider></Divider>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            paddingTop: 1,
+                            paddingBottom: 1,
+                        }}
+                    >
+                        <Button
+                            variant='contained'
+                            onClick={() => navigate(`/checkout/${cartId}/`)}
+                        >
+                            Proceed to Checkout
+                        </Button>
+                    </Box>
                 </>
             )}
             {cartInfo?.items.length === 0 && (

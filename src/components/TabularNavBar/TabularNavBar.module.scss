@@ -1,0 +1,18 @@
+@import '../../styles/variables';
+
+.tabNav {
+    display: flex;
+    height: $tabular-nav-height;
+    background-color: $blue-gray;
+    justify-content: space-evenly;
+    align-items: center;
+    .btn {
+        color: $white;
+        flex: 1 1;
+        border-color: $blue-gray;
+        &:hover {
+            border-color: $white;
+        }
+        white-space: nowrap;
+    }
+}

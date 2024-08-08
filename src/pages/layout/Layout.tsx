@@ -15,6 +15,7 @@ import {
 } from '../../store/accountApiSlice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { Box, Link } from '@mui/material';
+import TabularNavBar from '../../components/TabularNavBar/TabularNavBar';
 
 export default function Layout() {
     const navigate = useNavigate();
@@ -153,7 +154,7 @@ export default function Layout() {
                 setIsLoggedIn(false);
                 createNewCart();
                 refetchUserStatus();
-                navigate('/')
+                navigate('/');
             })
             .catch(() => {});
     };
@@ -223,6 +224,7 @@ export default function Layout() {
                     </div>
                 </Button>
             </Box>
+            <TabularNavBar />
             <Box className={styles.main}>
                 <Outlet />
             </Box>

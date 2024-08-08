@@ -9,11 +9,13 @@ import Homepage from '../pages/homepage/Homepage';
 import Layout from '../pages/layout/Layout';
 import Login from '../pages/login/Login';
 import SignUp from '../pages/signup/SignUp';
+import Checkout from '../pages/checkout/Checkout';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<Layout />}>
             <Route path='/' element={<Homepage />} />
+            <Route path='/checkout/:cart_id' element={<Checkout />} />
             <Route path='/cart/:cart_id/' element={<Cart />} />
             <Route path='/login/' element={<Login />} />
             <Route path='/sign-up/' element={<SignUp />} />
