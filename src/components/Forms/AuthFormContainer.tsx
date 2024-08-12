@@ -16,11 +16,11 @@ const AuthFormContainer: React.FC<AuthFormContainerProps> = (props) => {
             sx={{
                 p: 1,
                 width: {
-                    xs: '80%',
-                    sm: '60%',
-                    md: '50%',
-                    lg: '30%',
-                    xl: '20%',
+                    xs: '100%',
+                    sm: '80%',
+                    md: '60%',
+                    lg: '60%',
+                    xl: '40%',
                 },
             }}
             onSubmit={props.onSubmit}
