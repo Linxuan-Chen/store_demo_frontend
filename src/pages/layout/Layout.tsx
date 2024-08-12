@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Button, Menu, MenuItem } from '@mui/material';
-import styles from './Layout.module.scss';
-import storeLogo from '../../assets/logo.png';
-import ShoppingCartIcon from '../../components/Buttons/ShoppingCartIcon/ShoppingCartIcon';
+import { Button, Menu, MenuItem, Typography, Box, Link } from '@mui/material';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import {
     useGetCartItemCountQuery,
     useCreateNewCartMutation,
@@ -13,9 +13,11 @@ import {
     useRefreshTokenMutation,
     useLogoutMutation,
 } from '../../store/accountApiSlice';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { Box, Link } from '@mui/material';
+import ShoppingCartIcon from '../../components/Buttons/ShoppingCartIcon/ShoppingCartIcon';
 import TabularNavBar from '../../components/TabularNavBar/TabularNavBar';
+import storeLogo from '../../assets/logo.png';
+import styles from './Layout.module.scss';
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export default function Layout() {
     const navigate = useNavigate();
@@ -105,6 +107,9 @@ export default function Layout() {
         isUserStatusSuccess,
     ]);
 
+    /**
+     * @description: Fetch the amount of shopping cart items
+     */
     useEffect(() => {
         const storedCartId = localStorage.getItem('cart_id');
         if (storedCartId) {
@@ -112,6 +117,9 @@ export default function Layout() {
         }
     }, [refetchCount]);
 
+    /**
+     * @description: Sync anonymous shopping cart id with local states
+     */
     useEffect(() => {
         if (isLoggedIn) {
             const newCartId = userStatus ? String(userStatus.cart_id) : null;
@@ -122,6 +130,9 @@ export default function Layout() {
         }
     }, [isLoggedIn, userStatus]);
 
+    /**
+     * @description: Render welcome message displayed in account menu
+     */
     useEffect(() => {
         const getWelcomeMsg = () => {
             setWelcomeMsg(
@@ -136,18 +147,28 @@ export default function Layout() {
     }, [userStatusError, userStatus]);
 
     /**
-     * @description: Get welcome message
-     * @return {string} welcome message displayed in account menu
+     * @description: Save anonymous cart id everytime a new shopping cart is created
      */
-    // Menu trigger methods
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    useEffect(() => {
+        if (isCreateCartSuccess && createCartData) {
+            const newCartId = createCartData.id;
+            localStorage.setItem('cart_id', newCartId);
+            setCartId(newCartId);
+        }
+    }, [isCreateCartSuccess, createCartData]);
+
+    const handleClickAccountMenu = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+
+    const handleCloseAccountMenu = () => {
         setAnchorEl(null);
     };
+
     const handleSignOut = async () => {
-        handleClose();
+        handleCloseAccountMenu();
         logout()
             .unwrap()
             .then(() => {
@@ -158,18 +179,11 @@ export default function Layout() {
             })
             .catch(() => {});
     };
+
     const handleSignIn = () => {
-        handleClose();
+        handleCloseAccountMenu();
         navigate('/login/');
     };
-
-    useEffect(() => {
-        if (isCreateCartSuccess && createCartData) {
-            const newCartId = createCartData.id;
-            localStorage.setItem('cart_id', newCartId);
-            setCartId(newCartId);
-        }
-    }, [isCreateCartSuccess, createCartData]);
 
     return (
         <>
@@ -192,7 +206,7 @@ export default function Layout() {
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup='true'
                         aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
+                        onClick={handleClickAccountMenu}
                         className={styles.accountButton}
                     >
                         {welcomeMsg}
@@ -200,13 +214,36 @@ export default function Layout() {
                     <Menu
                         open={open}
                         anchorEl={anchorEl}
-                        onClose={handleClose}
+                        onClose={handleCloseAccountMenu}
                         MenuListProps={{
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleSignIn}>Sign in</MenuItem>
-                        <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+                        <MenuItem onClick={handleSignIn}>
+                            <LoginIcon />
+                            <Typography sx={{ paddingLeft: 2 }}>
+                                Sign in
+                            </Typography>
+                        </MenuItem>
+                        <MenuItem onClick={handleSignOut}>
+                            <LogoutIcon />
+                            <Typography sx={{ paddingLeft: 2 }}>
+                                Sign Out
+                            </Typography>
+                        </MenuItem>
+                        {isLoggedIn && (
+                            <MenuItem
+                                onClick={() => {
+                                    handleCloseAccountMenu();
+                                    navigate('/profile/');
+                                }}
+                            >
+                                <PersonOutlineIcon />
+                                <Typography sx={{ paddingLeft: 2 }}>
+                                    Your Account
+                                </Typography>
+                            </MenuItem>
+                        )}
                     </Menu>
                 </div>
                 <Button
