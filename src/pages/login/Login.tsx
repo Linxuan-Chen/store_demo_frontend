@@ -159,11 +159,11 @@ const Login: React.FC = (props) => {
                         mt: 4,
                         mb: 2,
                         width: {
-                            xs: '80%',
-                            sm: '60%',
-                            md: '50%',
-                            lg: '30%',
-                            xl: '20%',
+                            xs: '100%',
+                            sm: '80%',
+                            md: '60%',
+                            lg: '60%',
+                            xl: '40%',
                         },
                     }}
                     textAlign='center'

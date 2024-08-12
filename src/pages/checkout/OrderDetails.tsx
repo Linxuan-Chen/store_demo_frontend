@@ -65,13 +65,6 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
     return (
         <Box
             sx={{
-                width: {
-                    xs: '90%',
-                    sm: '80%',
-                    md: '70%',
-                    lg: '60%',
-                    xl: '50%',
-                },
                 display: 'flex',
                 flexDirection: 'column',
             }}
@@ -91,13 +84,6 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
                         <FormLabel
                             id='address-radio-buttons-group-label'
                             sx={{
-                                width: {
-                                    xs: '90%',
-                                    sm: '80%',
-                                    md: '70%',
-                                    lg: '60%',
-                                    xl: '50%',
-                                },
                                 fontWeight: 'bold',
                                 fontSize: '1.25rem',
                                 padding: 1,

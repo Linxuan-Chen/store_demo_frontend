@@ -219,27 +219,13 @@ export default function Layout() {
                         open={open}
                         anchorEl={anchorEl}
                         onClose={handleCloseAccountMenu}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
                     >
-                        <MenuItem onClick={handleSignIn}>
-                            <LoginIcon />
-                            <Typography sx={{ paddingLeft: 2 }}>
-                                Sign in
-                            </Typography>
-                        </MenuItem>
-                        <MenuItem onClick={handleSignOut}>
-                            <LogoutIcon />
-                            <Typography sx={{ paddingLeft: 2 }}>
-                                Sign Out
-                            </Typography>
-                        </MenuItem>
                         {isLoggedIn && (
                             <MenuItem
+                                aria-labelledby='your-account'
                                 onClick={() => {
                                     handleCloseAccountMenu();
-                                    navigate('/profile/');
+                                    navigate('/account/');
                                 }}
                             >
                                 <PersonOutlineIcon />
@@ -248,6 +234,24 @@ export default function Layout() {
                                 </Typography>
                             </MenuItem>
                         )}
+                        <MenuItem
+                            aria-labelledby='login'
+                            onClick={handleSignIn}
+                        >
+                            <LoginIcon />
+                            <Typography sx={{ paddingLeft: 2 }}>
+                                Sign in
+                            </Typography>
+                        </MenuItem>
+                        <MenuItem
+                            aria-labelledby='logout'
+                            onClick={handleSignOut}
+                        >
+                            <LogoutIcon />
+                            <Typography sx={{ paddingLeft: 2 }}>
+                                Sign Out
+                            </Typography>
+                        </MenuItem>
                     </Menu>
                 </div>
                 <Button
@@ -266,7 +270,19 @@ export default function Layout() {
                 </Button>
             </Box>
             <TabularNavBar />
-            <Box className={styles.main}>
+            <Box
+                sx={{
+                    width: {
+                        xs: '90%',
+                        sm: '80%',
+                        md: '70%',
+                        lg: '60%',
+                        xl: '50%',
+                    },
+                    margin: 'auto'
+                }}
+                className={styles.main}
+            >
                 <Outlet />
             </Box>
             <Box component='footer' className={styles.footer}>

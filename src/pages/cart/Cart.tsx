@@ -23,7 +23,7 @@ import {
 } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import CartItem from '../../components/CartItem/CartItem';
+import CartItem from '../../components/Card/CartItem';
 import { useNavigate } from 'react-router-dom';
 import Popover from '../../components/Popover/Popover';
 
@@ -90,13 +90,6 @@ export default function Cart() {
     return (
         <Paper
             sx={{
-                width: {
-                    xs: '90%',
-                    sm: '80%',
-                    md: '70%',
-                    lg: '60%',
-                    xl: '50%',
-                },
                 paddingTop: '30px',
                 margin: 'auto',
             }}
