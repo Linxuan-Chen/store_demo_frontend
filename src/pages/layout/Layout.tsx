@@ -19,6 +19,10 @@ import storeLogo from '../../assets/logo.png';
 import styles from './Layout.module.scss';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
+/**
+ * @description: This component renders the main layout, it includes the top nav bar,
+ * main content and footer, to build the page structure.
+ */
 export default function Layout() {
     const navigate = useNavigate();
     const [cartId, setCartId] = useState(localStorage.getItem('cart_id'));
