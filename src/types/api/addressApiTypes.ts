@@ -3,6 +3,7 @@ export type AddressesResponse = {
     street: string;
     city: string;
     zip: string;
+    is_default: boolean;
 }[];
 
 export interface UpdateAddressPayload {
@@ -11,5 +12,6 @@ export interface UpdateAddressPayload {
         street?: string;
         city?: string;
         zip?: string;
+        is_default?: boolean;
     };
 }

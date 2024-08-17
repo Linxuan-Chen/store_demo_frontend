@@ -3,7 +3,7 @@ import type {
     AddressesResponse,
     UpdateAddressPayload,
 } from '../types/api/addressApiTypes';
-import { util } from './customerApiSlice';
+import { util as customerUtil } from './customerApiSlice';
 
 const addressApiSlice = createApi({
     reducerPath: 'addressApi',
@@ -11,10 +11,11 @@ const addressApiSlice = createApi({
         baseUrl: '/api/store/',
         credentials: 'include',
     }),
-    tagTypes: ['CurrentCustomer', 'CustomerInfo'],
+    tagTypes: ['CurrentCustomer', 'CustomerInfo', 'CurrentAddress'],
     endpoints: (builder) => ({
         getAddresses: builder.query<AddressesResponse, void>({
             query: () => 'addresses/',
+            providesTags: [{ type: 'CurrentAddress', id: 'CURRENT_ADDRESS' }],
         }),
         updateAddress: builder.mutation<void, UpdateAddressPayload>({
             query: (params) => ({
@@ -25,7 +26,7 @@ const addressApiSlice = createApi({
             onQueryStarted: (params, api) => {
                 api.queryFulfilled.then(() => {
                     api.dispatch(
-                        util.invalidateTags([
+                        customerUtil.invalidateTags([
                             {
                                 type: 'CurrentCustomer',
                                 id: `CURRENT_CUSTOMER`,
@@ -34,6 +35,9 @@ const addressApiSlice = createApi({
                     );
                 });
             },
+            invalidatesTags: [
+                { type: 'CurrentAddress', id: 'CURRENT_ADDRESS' },
+            ],
         }),
         deleteAddress: builder.mutation<void, number>({
             query: (address_id) => ({
@@ -43,7 +47,7 @@ const addressApiSlice = createApi({
             onQueryStarted: (params, api) => {
                 api.queryFulfilled.then(() => {
                     api.dispatch(
-                        util.invalidateTags([
+                        customerUtil.invalidateTags([
                             {
                                 type: 'CurrentCustomer',
                                 id: `CURRENT_CUSTOMER`,
@@ -52,6 +56,9 @@ const addressApiSlice = createApi({
                     );
                 });
             },
+            invalidatesTags: [
+                { type: 'CurrentAddress', id: 'CURRENT_ADDRESS' },
+            ],
         }),
     }),
 });
@@ -60,5 +67,6 @@ export const {
     useGetAddressesQuery,
     useUpdateAddressMutation,
     useDeleteAddressMutation,
+    util
 } = addressApiSlice;
 export default addressApiSlice;

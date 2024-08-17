@@ -5,7 +5,7 @@ import type { CollectionListResponse } from '../types/api/collectionApiTypes';
 const collectionApiSlice = createApi({
     reducerPath: 'collectionApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'api/store/',
+        baseUrl: '/api/store/',
         credentials: 'include',
     }),
     endpoints: (builder) => ({

@@ -22,6 +22,7 @@ import {
 } from '../../store/customerApiSlice';
 import { useForm, Controller } from 'react-hook-form';
 import { useUpdateAddressMutation } from '../../store/addressApiSlice';
+import lodash from 'lodash';
 
 interface ShowAlertTypes {
     show: boolean;
@@ -77,7 +78,10 @@ const Address: React.FC<AddressProps> = ({
     }, [refetchCustomerInfo]);
 
     useEffect(() => {
-        if (currentCustomerInfo && currentCustomerInfo.addresses) {
+        if (
+            currentCustomerInfo &&
+            !lodash.isEmpty(currentCustomerInfo.addresses)
+        ) {
             setSelectedAddress(currentCustomerInfo.addresses[0].id.toString());
         }
     }, [setSelectedAddress, currentCustomerInfo]);
@@ -122,11 +126,14 @@ const Address: React.FC<AddressProps> = ({
                                                 {
                                                     currentCustomerInfo?.first_name
                                                 }{' '}
-                                                {currentCustomerInfo?.last_name}
+                                                {
+                                                    currentCustomerInfo?.last_name
+                                                }
                                             </Typography>
                                             <Typography>
-                                                {address.street}, {address.city}
-                                                , {address.zip}
+                                                {address.street},{' '}
+                                                {address.city},{' '}
+                                                {address.zip}
                                             </Typography>
                                             <Button
                                                 variant='text'
@@ -242,132 +249,111 @@ const Address: React.FC<AddressProps> = ({
         setShowAlert((prev) => ({ ...prev, show: false }));
     };
     return (
-        <>
-            <Paper
+        <Paper sx={{ width: '100%' }}>
+            <Alert
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                autoHideDuration={3000}
+                onClose={handleAlertClose}
+                showAlert={showAlert}
+            />
+            <FormLabel
+                id='address-radio-buttons-group-label'
                 sx={{
-                    width: {
-                        xs: '90%',
-                        sm: '80%',
-                        md: '70%',
-                        lg: '60%',
-                        xl: '50%',
-                    },
+                    fontWeight: 'bold',
+                    fontSize: '1.25rem',
                 }}
             >
-                <Alert
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                    autoHideDuration={3000}
-                    handleAlertClose={handleAlertClose}
-                    showAlert={showAlert}
-                />
-                <FormLabel
-                    id='address-radio-buttons-group-label'
-                    sx={{
-                        width: {
-                            xs: '90%',
-                            sm: '80%',
-                            md: '70%',
-                            lg: '60%',
-                            xl: '50%',
-                        },
-                        fontWeight: 'bold',
-                        fontSize: '1.25rem',
-                    }}
-                >
-                    Delivery addresses
-                </FormLabel>
-                <Box sx={{ marginTop: 2 }}>
-                    {currentCustomerInfo?.addresses
-                        ? populateAddressRadioGroup()
-                        : showEmptyAddressPlaceholder()}
-                </Box>
-                <Button onClick={() => handleAddressModalOpen('add')}>
-                    Add Address
-                </Button>
-                <Dialog
-                    open={openEditModal}
-                    onClose={handleAddressModalClose}
-                    aria-labelledby='edit or add address'
-                    aria-describedby='display edit or add address form depending on what button you clicked'
-                    PaperProps={{
-                        component: 'form',
-                        onSubmit: handleSubmit(handleFormSubmit),
-                    }}
-                >
-                    <DialogTitle>
-                        {formMode === 'edit' ? 'Edit' : 'Add'} Address
-                    </DialogTitle>
-                    <DialogContent>
-                        <Controller
-                            name='street'
-                            control={control}
-                            rules={{
-                                required: 'This field is required',
-                            }}
-                            render={({ field, fieldState }) => (
-                                <FormControl fullWidth>
-                                    <FormLabel>Street: </FormLabel>
-                                    <TextField
-                                        {...field}
-                                        id='street'
-                                        type='text'
-                                        size='small'
-                                        error={!!fieldState.error}
-                                        helperText={fieldState.error?.message}
-                                    />
-                                </FormControl>
-                            )}
-                        />
-                        <Controller
-                            name='city'
-                            control={control}
-                            rules={{
-                                required: 'This field is required',
-                            }}
-                            render={({ field, fieldState }) => (
-                                <FormControl fullWidth>
-                                    <FormLabel>City: </FormLabel>
-                                    <TextField
-                                        {...field}
-                                        id='city'
-                                        type='text'
-                                        size='small'
-                                        error={!!fieldState.error}
-                                        helperText={fieldState.error?.message}
-                                    />
-                                </FormControl>
-                            )}
-                        />
-                        <Controller
-                            name='zip'
-                            control={control}
-                            rules={{
-                                required: 'This field is required',
-                            }}
-                            render={({ field, fieldState }) => (
-                                <FormControl fullWidth>
-                                    <FormLabel>Zip Code: </FormLabel>
-                                    <TextField
-                                        {...field}
-                                        id='zip'
-                                        type='text'
-                                        size='small'
-                                        error={!!fieldState.error}
-                                        helperText={fieldState.error?.message}
-                                    />
-                                </FormControl>
-                            )}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleAddressModalClose}>
-                            Cancel
-                        </Button>
-                        <Button type='submit'>Save</Button>
-                    </DialogActions>
-                </Dialog>
-            </Paper>
-        </>
+                Delivery addresses
+            </FormLabel>
+            <Box sx={{ marginTop: 2 }}>
+                {!lodash.isEmpty(currentCustomerInfo?.addresses)
+                    ? populateAddressRadioGroup()
+                    : showEmptyAddressPlaceholder()}
+            </Box>
+            <Button onClick={() => handleAddressModalOpen('add')}>
+                Add Address
+            </Button>
+            <Dialog
+                open={openEditModal}
+                onClose={handleAddressModalClose}
+                aria-labelledby='edit or add address'
+                aria-describedby='display edit or add address form depending on what button you clicked'
+                PaperProps={{
+                    component: 'form',
+                    onSubmit: handleSubmit(handleFormSubmit),
+                }}
+            >
+                <DialogTitle>
+                    {formMode === 'edit' ? 'Edit' : 'Add'} Address
+                </DialogTitle>
+                <DialogContent>
+                    <Controller
+                        name='street'
+                        control={control}
+                        rules={{
+                            required: 'This field is required',
+                        }}
+                        render={({ field, fieldState }) => (
+                            <FormControl fullWidth>
+                                <FormLabel>Street: </FormLabel>
+                                <TextField
+                                    {...field}
+                                    id='street'
+                                    type='text'
+                                    size='small'
+                                    error={!!fieldState.error}
+                                    helperText={fieldState.error?.message}
+                                />
+                            </FormControl>
+                        )}
+                    />
+                    <Controller
+                        name='city'
+                        control={control}
+                        rules={{
+                            required: 'This field is required',
+                        }}
+                        render={({ field, fieldState }) => (
+                            <FormControl fullWidth>
+                                <FormLabel>City: </FormLabel>
+                                <TextField
+                                    {...field}
+                                    id='city'
+                                    type='text'
+                                    size='small'
+                                    error={!!fieldState.error}
+                                    helperText={fieldState.error?.message}
+                                />
+                            </FormControl>
+                        )}
+                    />
+                    <Controller
+                        name='zip'
+                        control={control}
+                        rules={{
+                            required: 'This field is required',
+                        }}
+                        render={({ field, fieldState }) => (
+                            <FormControl fullWidth>
+                                <FormLabel>Zip Code: </FormLabel>
+                                <TextField
+                                    {...field}
+                                    id='zip'
+                                    type='text'
+                                    size='small'
+                                    error={!!fieldState.error}
+                                    helperText={fieldState.error?.message}
+                                />
+                            </FormControl>
+                        )}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleAddressModalClose}>Cancel</Button>
+                    <Button type='submit'>Save</Button>
+                </DialogActions>
+            </Dialog>
+        </Paper>
     );
 };
 

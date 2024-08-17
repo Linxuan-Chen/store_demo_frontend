@@ -196,8 +196,8 @@ const CartItem: React.FC<CartItemProps> = (props) => {
                             vertical: 'top',
                             horizontal: 'right',
                         }}
-                        handleConfirm={handleConfirm}
-                        handleClose={handleClose}
+                        onConfirm={handleConfirm}
+                        onClose={handleClose}
                         transformOrigin={{
                             vertical: 'bottom',
                             horizontal: 'left',

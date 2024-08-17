@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 import { usePlaceOrderMutation } from '../../store/orderApiSlice';
 import productPlaceHolderImg from '../../assets/placeholder-images-image_large.webp';
 import { useNavigate } from 'react-router-dom';
+import ReadOnlyCartItem from '../../components/Card/ReadOnlyCartItem';
 
 interface OrderDetailsProps {
     selectedAddress: string;
@@ -67,6 +68,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
+                width: '100%',
             }}
         >
             {cartInfo && cartInfo.items.length > 0 && (
@@ -77,7 +79,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
                             horizontal: 'right',
                         }}
                         autoHideDuration={3000}
-                        handleAlertClose={handleAlertClose}
+                        onClose={handleAlertClose}
                         showAlert={showAlert}
                     />
                     <Paper sx={{ marginBottom: 2 }}>
@@ -94,61 +96,14 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
                         <Box sx={{ overflowY: 'scroll' }}>
                             {cartInfo &&
                                 cartInfo.items.map((item) => (
-                                    <Card
+                                    <ReadOnlyCartItem
                                         key={item.id}
-                                        sx={{ display: 'flex' }}
-                                    >
-                                        <CardActionArea
-                                            onClick={handleClickProduct}
-                                            sx={{
-                                                maxWidth: '100px',
-                                                flex: '1 1',
-                                            }}
-                                        >
-                                            <CardMedia
-                                                image={productPlaceHolderImg}
-                                                component='img'
-                                            />
-                                        </CardActionArea>
-                                        <CardContent
-                                            sx={{
-                                                flex: '1 1 60%',
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                            }}
-                                        >
-                                            <CardActionArea
-                                                sx={{ flexBasis: '20%' }}
-                                            >
-                                                <Typography variant='h5'>
-                                                    {item.product.title}
-                                                </Typography>
-                                            </CardActionArea>
-                                            <Box
-                                                sx={{
-                                                    flexBasis: '20%',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent:
-                                                        'space-between',
-                                                }}
-                                            >
-                                                <Typography>
-                                                    Quantity:
-                                                </Typography>
-                                                <Divider
-                                                    orientation='vertical'
-                                                    variant='middle'
-                                                    flexItem
-                                                />
-                                                <Divider
-                                                    orientation='vertical'
-                                                    variant='middle'
-                                                    flexItem
-                                                />
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
+                                        id={item.id}
+                                        onClick={handleClickProduct}
+                                        quantity={item.quantity}
+                                        title={item.product.title}
+                                        image={productPlaceHolderImg}
+                                    />
                                 ))}
                         </Box>
                     </Paper>
@@ -157,6 +112,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
                         sx={{ alignSelf: 'flex-end' }}
                         variant='contained'
                         size='large'
+                        disabled={selectedAddress === ''}
                     >
                         Place Order
                     </Button>

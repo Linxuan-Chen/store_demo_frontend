@@ -14,9 +14,8 @@ const Checkout: React.FC = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'flex-start',
-                overflowY: 'scroll',
                 height: '100%',
-                gap: '30px'
+                gap: '30px',
             }}
         >
             <Address

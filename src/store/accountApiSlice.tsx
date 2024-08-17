@@ -14,9 +14,11 @@ const loginApiSlice = createApi({
         baseUrl: '/account/',
         credentials: 'include',
     }),
+    tagTypes: ['CurrentUser'],
     endpoints: (builder) => ({
         getUserStatus: builder.query<UserStatusResponse, void>({
             query: () => 'check-user-status/',
+            providesTags: [{ type: 'CurrentUser', id: 'CURRENT_USER_INFO' }],
         }),
         login: builder.mutation<void, UserLoginPayload>({
             query: (payload) => ({
@@ -73,6 +75,7 @@ export const {
     useRefreshTokenMutation,
     useMergeCartMutation,
     useLazyCheckUsernameAvailablilityQuery,
-    useUserSignUpMutation
+    useUserSignUpMutation,
+    util
 } = loginApiSlice;
 export default loginApiSlice;

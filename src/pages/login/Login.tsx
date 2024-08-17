@@ -60,7 +60,7 @@ const Login: React.FC = (props) => {
             .catch((err) => {
                 setShowNotification((previousData) => ({
                     ...previousData,
-                    message: err.data.detail,
+                    message: err.data.detail || 'Failed to log in',
                     open: true,
                 }));
             });

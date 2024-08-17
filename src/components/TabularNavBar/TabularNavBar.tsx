@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 import styles from './TabularNavBar.module.scss';
 import { useGetCollectionListQuery } from '../../store/collectionApiSlice';
@@ -6,7 +5,9 @@ import { useGetCollectionListQuery } from '../../store/collectionApiSlice';
 interface TabularNavBarProps {}
 
 const TabularNavBar: React.FC<TabularNavBarProps> = (props) => {
-    const { data: collectionData } = useGetCollectionListQuery();
+    const { data: collectionData, isFetching} = useGetCollectionListQuery();
+    console.log(isFetching);
+
     return (
         <Box className={styles.tabNav}>
             {collectionData &&

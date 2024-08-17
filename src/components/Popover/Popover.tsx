@@ -11,8 +11,8 @@ import {
 interface PopoverProps {
     anchorEl: HTMLButtonElement | null;
     open: boolean;
-    handleConfirm?: React.MouseEventHandler<HTMLButtonElement>;
-    handleClose?: React.MouseEventHandler<HTMLButtonElement>;
+    onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
+    onClose?: React.MouseEventHandler<HTMLButtonElement>;
     transformOrigin?: PopoverOrigin;
     anchorOrigin?: PopoverOrigin;
     title?: string;
@@ -22,8 +22,8 @@ interface PopoverProps {
 const Popover: React.FC<PopoverProps> = ({
     anchorEl,
     open,
-    handleConfirm,
-    handleClose,
+    onConfirm,
+    onClose,
     transformOrigin,
     anchorOrigin,
     title,
@@ -34,7 +34,7 @@ const Popover: React.FC<PopoverProps> = ({
             anchorEl={anchorEl}
             open={open}
             anchorOrigin={anchorOrigin}
-            onClose={handleClose}
+            onClose={onClose}
             transformOrigin={transformOrigin}
         >
             <Typography sx={{ p: 1 }} variant='h6'>
@@ -62,7 +62,7 @@ const Popover: React.FC<PopoverProps> = ({
                         color='primary'
                         size='small'
                         variant='text'
-                        onClick={handleClose}
+                        onClick={onClose}
                     >
                         Cancel
                     </Button>
@@ -70,7 +70,7 @@ const Popover: React.FC<PopoverProps> = ({
                         color='warning'
                         size='small'
                         variant='text'
-                        onClick={handleConfirm}
+                        onClick={onConfirm}
                     >
                         Confirm
                     </Button>

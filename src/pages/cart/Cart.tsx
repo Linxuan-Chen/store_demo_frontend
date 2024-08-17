@@ -127,8 +127,8 @@ export default function Cart() {
                                 vertical: 'top',
                                 horizontal: 'right',
                             }}
-                            handleConfirm={handleBulkDeleteConfirm}
-                            handleClose={handleClose}
+                            onConfirm={handleBulkDeleteConfirm}
+                            onClose={handleClose}
                             transformOrigin={{
                                 vertical: 'bottom',
                                 horizontal: 'left',

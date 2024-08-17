@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { PlaceOrderParams } from '../types/api/orderApiTypes';
+import type {
+    PlaceOrderParams,
+    OrderResponse,
+} from '../types/api/orderApiTypes';
 import { util } from './cartApiSlice';
 
 const orderApiSlice = createApi({
@@ -8,7 +11,7 @@ const orderApiSlice = createApi({
         baseUrl: '/api/store/orders/',
         credentials: 'include',
     }),
-    tagTypes: ['CartItem', 'Cart', 'CartCount'],
+    tagTypes: ['CartItem', 'Cart', 'CartCount', 'Order'],
     endpoints: (builder) => ({
         placeOrder: builder.mutation<Response, PlaceOrderParams>({
             query: (params) => ({
@@ -28,9 +31,19 @@ const orderApiSlice = createApi({
                     );
                 });
             },
+            invalidatesTags: () => [{ type: 'Order', id: 'ORDER_LIST' }],
+        }),
+        getOrder: builder.query<OrderResponse, number>({
+            query: (page) => ({
+                url: '/',
+                params: {
+                    page: page,
+                },
+            }),
+            providesTags: [{ type: 'Order', id: 'ORDER_LIST' }],
         }),
     }),
 });
 
-export const { usePlaceOrderMutation } = orderApiSlice;
+export const { usePlaceOrderMutation, useGetOrderQuery } = orderApiSlice;
 export default orderApiSlice;

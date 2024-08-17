@@ -5,20 +5,21 @@ import {
     AlertColor,
 } from '@mui/material';
 
+export type ShowAlertType = {
+    show: boolean;
+    severity: AlertColor;
+    msg: string;
+};
 interface AlertProps {
     anchorOrigin?: SnackbarOrigin;
-    showAlert: {
-        show: boolean;
-        severity: AlertColor;
-        msg: string;
-    };
-    handleAlertClose?: (event: React.SyntheticEvent<any> | Event) => void;
+    showAlert: ShowAlertType;
+    onClose?: (event: React.SyntheticEvent<any> | Event) => void;
     autoHideDuration: number;
 }
 
 const Alert: React.FC<AlertProps> = ({
     showAlert,
-    handleAlertClose,
+    onClose,
     autoHideDuration,
     anchorOrigin,
 }) => {
@@ -26,10 +27,10 @@ const Alert: React.FC<AlertProps> = ({
         <Snackbar
             anchorOrigin={anchorOrigin}
             open={showAlert.show}
-            onClose={handleAlertClose}
+            onClose={onClose}
             autoHideDuration={autoHideDuration}
         >
-            <MuiAlert severity={showAlert.severity} onClose={handleAlertClose}>
+            <MuiAlert severity={showAlert.severity} onClose={onClose}>
                 {showAlert.msg}
             </MuiAlert>
         </Snackbar>

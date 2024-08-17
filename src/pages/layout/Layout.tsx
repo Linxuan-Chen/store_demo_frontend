@@ -225,7 +225,7 @@ export default function Layout() {
                                 aria-labelledby='your-account'
                                 onClick={() => {
                                     handleCloseAccountMenu();
-                                    navigate('/account/');
+                                    navigate('/my-account/');
                                 }}
                             >
                                 <PersonOutlineIcon />
@@ -270,20 +270,22 @@ export default function Layout() {
                 </Button>
             </Box>
             <TabularNavBar />
-            <Box
-                sx={{
-                    width: {
-                        xs: '90%',
-                        sm: '80%',
-                        md: '70%',
-                        lg: '60%',
-                        xl: '50%',
-                    },
-                    margin: 'auto'
-                }}
-                className={styles.main}
-            >
-                <Outlet />
+            <Box sx={{ overflowY: 'scroll' }}>
+                <Box
+                    sx={{
+                        width: {
+                            xs: '90%',
+                            sm: '80%',
+                            md: '70%',
+                            lg: '60%',
+                            xl: '50%',
+                        },
+                        margin: 'auto',
+                    }}
+                    className={styles.main}
+                >
+                    <Outlet />
+                </Box>
             </Box>
             <Box component='footer' className={styles.footer}>
                 <p>
