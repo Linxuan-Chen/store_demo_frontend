@@ -13,11 +13,13 @@ import {
     useRefreshTokenMutation,
     useLogoutMutation,
 } from '../../store/accountApiSlice';
+import { useGetAddressesQuery } from '../../store/addressApiSlice';
 import ShoppingCartIcon from '../../components/Buttons/ShoppingCartIcon/ShoppingCartIcon';
 import TabularNavBar from '../../components/TabularNavBar/TabularNavBar';
 import storeLogo from '../../assets/logo.png';
 import styles from './Layout.module.scss';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import SearchInput from '../../components/SearchInput/SearchInput';
 
 /**
  * @description: This component renders the main layout, it includes the top nav bar,
@@ -202,9 +204,10 @@ export default function Layout() {
                         alt='store logo'
                     />
                 </Button>
-                <div className={styles.address}>Address</div>
-                <div className={styles.search}>Search</div>
-                <div className={styles.account}>
+                <Box className={styles.search}>
+                    <SearchInput />
+                </Box>
+                <Box className={styles.account}>
                     <Button
                         id='basic-button'
                         aria-controls={open ? 'basic-menu' : undefined}
@@ -253,7 +256,7 @@ export default function Layout() {
                             </Typography>
                         </MenuItem>
                     </Menu>
-                </div>
+                </Box>
                 <Button
                     className={styles.clickBox}
                     onClick={() => {

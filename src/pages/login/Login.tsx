@@ -66,8 +66,8 @@ const Login: React.FC = (props) => {
             });
     };
 
-    const handleFormDataChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+    const handleFormDataChange: React.ChangeEventHandler<HTMLInputElement> = (
+        event
     ) => {
         const { id, value, type, checked } = event.target;
 

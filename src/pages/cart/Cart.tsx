@@ -67,7 +67,7 @@ export default function Cart() {
         }
     };
 
-    const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSelectAll: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         if (e.target.checked && cartInfo) {
             setSelected(cartInfo.items.map((data) => data.id));
         } else {

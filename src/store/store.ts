@@ -5,6 +5,7 @@ import collectionApiSlice from './collectionApiSlice';
 import addressApiSlice from './addressApiSlice';
 import customerApiSlice from './customerApiSlice';
 import orderApiSlice from './orderApiSlice';
+import productApiSlice from './productApiSlice';
 
 const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
         [addressApiSlice.reducerPath]: addressApiSlice.reducer,
         [customerApiSlice.reducerPath]: customerApiSlice.reducer,
         [orderApiSlice.reducerPath]: orderApiSlice.reducer,
+        [productApiSlice.reducerPath]: productApiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
@@ -22,7 +24,8 @@ const store = configureStore({
             .concat(collectionApiSlice.middleware)
             .concat(addressApiSlice.middleware)
             .concat(customerApiSlice.middleware)
-            .concat(orderApiSlice.middleware);
+            .concat(orderApiSlice.middleware)
+            .concat(productApiSlice.middleware);
     },
 });
 

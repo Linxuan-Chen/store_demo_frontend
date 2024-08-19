@@ -1,5 +1,5 @@
 export interface CollectionListResponse {
     id: number;
-    title: String;
+    title: string;
     featured_products: Array<any>;
 }

@@ -1,6 +1,7 @@
 export interface UserStatusResponse {
     cart_id: number;
     first_name: string;
+    default_address: string;
 }
 
 export interface UserLoginPayload {

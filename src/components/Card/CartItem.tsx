@@ -80,9 +80,9 @@ const CartItem: React.FC<CartItemProps> = (props) => {
             </Typography>
         );
     };
-    const handleQuantityChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
+    const handleQuantityChange: React.ChangeEventHandler<
+        HTMLInputElement | HTMLTextAreaElement
+    > = (e) => {
         const rawValue = e.target.value;
         // Remove non-number values
         const numberOnlyValue = rawValue.replace(/[^\d]/g, '');
