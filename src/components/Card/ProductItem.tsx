@@ -124,7 +124,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
                 >
                     <CardMedia
                         component='img'
-                        src={PlaceholderImage}
+                        src={product.images[0]?.image || PlaceholderImage}
                         sx={{
                             maxHeight: '100px',
                             objectFit: 'cover',

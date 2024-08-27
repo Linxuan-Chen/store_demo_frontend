@@ -107,7 +107,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
                                         }
                                         quantity={item.quantity}
                                         title={item.product.title}
-                                        image={productPlaceHolderImg}
+                                        image={item.product.images[0]?.image || productPlaceHolderImg}
                                     />
                                 ))}
                         </Box>

@@ -73,7 +73,7 @@ const Orders: React.FC = (props) => {
                                     id={item.id}
                                     title={item.product_title}
                                     onClick={() => handleClickProduct(item.id)}
-                                    image={PlaceHolderImage}
+                                    image={item.image.image || PlaceHolderImage}
                                     quantity={item.quantity}
                                 />
                             ))}

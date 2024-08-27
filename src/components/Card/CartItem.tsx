@@ -139,9 +139,9 @@ const CartItem: React.FC<CartItemProps> = ({ itemInfo }) => {
         <Card sx={{ display: 'flex' }}>
             <CardActionArea
                 onClick={handleClickProduct}
-                sx={{ minWidth: '100px', flex: '1 1 20%' }}
+                sx={{ minWidth: '100px', height: '250px' , flex: '1 1 20%' }}
             >
-                <CardMedia image={productPlaceHolderImg} component='img' />
+                <CardMedia image={itemInfo.product.images[0]?.image || productPlaceHolderImg} component='img' />
             </CardActionArea>
             <CardContent
                 sx={{

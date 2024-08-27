@@ -15,6 +15,7 @@ export interface Product {
     slug: string;
     title: string;
     unit_price: number;
+    images: ProductImageType
 }
 export interface GetProductsResponse {
     count: number;
@@ -22,6 +23,11 @@ export interface GetProductsResponse {
     previous: string | null;
     results: Product[];
 }
+
+export type ProductImageType = {
+    id: number;
+    image: string;
+}[];
 
 export interface GetAProductResponse {
     collection: number;
@@ -32,4 +38,5 @@ export interface GetAProductResponse {
     slug: string;
     title: string;
     unit_price: number;
+    images: ProductImageType;
 }

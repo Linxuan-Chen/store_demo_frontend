@@ -131,8 +131,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
                 <Card sx={{ display: 'flex', marginTop: 3 }}>
                     <CardMedia
                         component='img'
-                        src={PlaceHolderImg}
-                        sx={{ flexBasis: '30%', height: '300px' }}
+                        src={productData.images[0]?.image || PlaceHolderImg}
+                        sx={{ flexBasis: '30%', height: '300px', maxWidth: '400px', objectFit: 'cover' }}
                     />
                     <CardContent
                         sx={{ display: 'flex', flexDirection: 'column' }}

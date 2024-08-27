@@ -1,3 +1,5 @@
+import type { ProductImageType } from './productApiTypes';
+
 export interface CartItemCount {
     count: Number;
 }
@@ -12,6 +14,7 @@ export interface SimpleProduct {
     inventory: number;
     unit_price: number;
     slug: string;
+    images: ProductImageType;
 }
 
 export interface CartItem {

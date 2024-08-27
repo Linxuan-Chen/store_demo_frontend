@@ -1,3 +1,5 @@
+import { ProductImageType } from "./productApiTypes";
+
 export interface PlaceOrderParams {
     cart_id: string;
     address_id: number;
@@ -23,4 +25,5 @@ export interface OrderItem {
     product_title: string;
     quantity: number;
     unit_price: number;
+    image: ProductImageType[number];
 }
