@@ -18,6 +18,7 @@ import { usePlaceOrderMutation } from '../../store/orderApiSlice';
 import productPlaceHolderImg from '../../assets/placeholder-images-image_large.webp';
 import { useNavigate } from 'react-router-dom';
 import ReadOnlyCartItem from '../../components/Card/ReadOnlyCartItem';
+import { SimpleProduct } from '../../types/api/cartApiTypes';
 
 interface OrderDetailsProps {
     selectedAddress: string;
@@ -41,8 +42,10 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
     });
     const navigate = useNavigate();
 
-    const handleClickProduct = () => {
-        // navigate()
+    const handleClickProduct = (product: SimpleProduct) => {
+        const slug = product.slug;
+        const id = product.id;
+        navigate(`/product/${id}/${slug && slug !== '-' ? `${slug}/` : ''}`);
     };
 
     const handlePlaceOrder = () => {
@@ -51,7 +54,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
             address_id: Number(selectedAddress),
         })
             .unwrap()
-            .then((res) => navigate('/'))
+            .then((res) => navigate('/my-account/orders/'))
             .catch((err) => showErrorAlert());
     };
 
@@ -99,7 +102,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
                                     <ReadOnlyCartItem
                                         key={item.id}
                                         id={item.id}
-                                        onClick={handleClickProduct}
+                                        onClick={() =>
+                                            handleClickProduct(item.product)
+                                        }
                                         quantity={item.quantity}
                                         title={item.product.title}
                                         image={productPlaceHolderImg}

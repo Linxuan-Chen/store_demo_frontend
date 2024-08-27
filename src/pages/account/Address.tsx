@@ -104,20 +104,21 @@ const Address: React.FC = (props) => {
                 },
             })
                 .unwrap()
-                .then(() =>
+                .then(() => {
                     setShowAlert({
                         show: true,
                         msg: 'Address is successfully set as default',
                         severity: 'success',
-                    })
-                )
-                .catch(() =>
+                    });
+                })
+                .catch(() => {
                     setShowAlert({
                         show: true,
                         msg: 'Failed to set as default',
                         severity: 'error',
-                    })
-                );
+                    });
+                })
+                .then(() => setSelectedAddressId(null));
         }
     };
     const handleAsDefaultClose = () => {
@@ -209,20 +210,21 @@ const Address: React.FC = (props) => {
                 payload: value,
             })
                 .unwrap()
-                .then(() =>
+                .then(() => {
                     setShowAlert({
                         show: true,
                         severity: 'success',
                         msg: 'Address is successfully updated',
-                    })
-                )
+                    });
+                })
                 .catch(() =>
                     setShowAlert({
                         show: false,
                         severity: 'error',
                         msg: 'Failed to udpate address',
                     })
-                );
+                )
+                .then(() => setSelectedAddressId(null));
         }
     };
 

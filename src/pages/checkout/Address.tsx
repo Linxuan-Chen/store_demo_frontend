@@ -23,6 +23,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { useUpdateAddressMutation } from '../../store/addressApiSlice';
 import lodash from 'lodash';
+import { useGetUserStatusQuery } from '../../store/accountApiSlice';
 
 interface ShowAlertTypes {
     show: boolean;
@@ -49,6 +50,7 @@ const Address: React.FC<AddressProps> = ({
 }) => {
     const ADDRESS_UPDATE_SUCCESS_MSG = 'Address updated successfully';
     const ADDRESS_UPDATE_FAILURE_MSG = 'Failed to update address';
+    const { isSuccess: isUserLoggedIn } = useGetUserStatusQuery();
     const [openEditModal, setOpenEditModal] = useState<boolean>(false);
     const [showAlert, setShowAlert] = useState<ShowAlertTypes>({
         show: false,
@@ -80,11 +82,12 @@ const Address: React.FC<AddressProps> = ({
     useEffect(() => {
         if (
             currentCustomerInfo &&
-            !lodash.isEmpty(currentCustomerInfo.addresses)
+            !lodash.isEmpty(currentCustomerInfo.addresses) &&
+            !selectedAddress
         ) {
             setSelectedAddress(currentCustomerInfo.addresses[0].id.toString());
         }
-    }, [setSelectedAddress, currentCustomerInfo]);
+    }, [setSelectedAddress, currentCustomerInfo, selectedAddress]);
 
     const handleRadioGroupChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -126,14 +129,11 @@ const Address: React.FC<AddressProps> = ({
                                                 {
                                                     currentCustomerInfo?.first_name
                                                 }{' '}
-                                                {
-                                                    currentCustomerInfo?.last_name
-                                                }
+                                                {currentCustomerInfo?.last_name}
                                             </Typography>
                                             <Typography>
-                                                {address.street},{' '}
-                                                {address.city},{' '}
-                                                {address.zip}
+                                                {address.street}, {address.city}
+                                                , {address.zip}
                                             </Typography>
                                             <Button
                                                 variant='text'
@@ -213,7 +213,8 @@ const Address: React.FC<AddressProps> = ({
                         address: data,
                     },
                 });
-                if (response) {
+                if (response.data) {
+                    setSelectedAddress(String(response.data.address.id));
                 }
             } else {
                 const addressId = Number(selectedAddress);
@@ -270,7 +271,10 @@ const Address: React.FC<AddressProps> = ({
                     ? populateAddressRadioGroup()
                     : showEmptyAddressPlaceholder()}
             </Box>
-            <Button onClick={() => handleAddressModalOpen('add')}>
+            <Button
+                disabled={!isUserLoggedIn}
+                onClick={() => handleAddressModalOpen('add')}
+            >
                 Add Address
             </Button>
             <Dialog

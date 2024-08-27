@@ -16,7 +16,6 @@ import {
     Typography,
     Toolbar,
     IconButton,
-    Tooltip,
     Button,
     Divider,
     Box,
@@ -26,9 +25,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CartItem from '../../components/Card/CartItem';
 import { useNavigate } from 'react-router-dom';
 import Popover from '../../components/Popover/Popover';
+import { useGetUserStatusQuery } from '../../store/accountApiSlice';
 
 export default function Cart() {
     const { cart_id: cartId } = useParams();
+    const { isSuccess: isUserLoggedIn } = useGetUserStatusQuery();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const open = Boolean(anchorEl);
     const [selected, setSelected] = useState<readonly number[]>([]);
@@ -185,12 +186,21 @@ export default function Cart() {
                             paddingBottom: 1,
                         }}
                     >
-                        <Button
-                            variant='contained'
-                            onClick={() => navigate(`/checkout/${cartId}/`)}
-                        >
-                            Proceed to Checkout
-                        </Button>
+                        {isUserLoggedIn ? (
+                            <Button
+                                variant='contained'
+                                onClick={() => navigate(`/checkout/${cartId}/`)}
+                            >
+                                Proceed to Checkout
+                            </Button>
+                        ) : (
+                            <Button
+                                variant='contained'
+                                onClick={() => navigate(`/login/`)}
+                            >
+                                Sign in to Checkout
+                            </Button>
+                        )}
                     </Box>
                 </>
             )}

@@ -82,7 +82,7 @@ const Orders: React.FC = (props) => {
                 ))}
             {orderData && orderData.results.length > 0 && (
                 <Pagination
-                    count={Math.ceil((orderData?.count || 0) / 2)}
+                    count={Math.ceil((orderData?.count || 0) / 3)}
                     onChange={(e, page) => handlePaginationChange(e, page)}
                 />
             )}

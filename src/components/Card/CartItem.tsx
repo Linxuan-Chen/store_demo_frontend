@@ -23,35 +23,33 @@ import {
 } from '../../store/cartApiSlice';
 import { debounce } from 'lodash';
 import Popover from '../Popover/Popover';
+import { getInventoryMsgMap, INVENTORY_COLOR_MAP } from '../../utils/constant';
 
 interface CartItemProps {
     itemInfo: CartItemTypes;
 }
 
-const CartItem: React.FC<CartItemProps> = (props) => {
+const CartItem: React.FC<CartItemProps> = ({ itemInfo }) => {
     const navigate = useNavigate();
     const { cart_id: cartId } = useParams();
     const [updateCartItem] = useUpdateCartItemMutation();
     const [deleteCartItem] = useDeleteCartItemMutation();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const open = Boolean(anchorEl);
-    const [quantity, setQuantity] = useState(props.itemInfo.quantity);
+    const [quantity, setQuantity] = useState(itemInfo.quantity);
     const handleClickProduct = () => {
-        // console.log(props.itemInfo);
-        // navigate()
+        console.log(itemInfo);
+        navigate(
+            `/product/${itemInfo.product.id}/${`${
+                itemInfo.product.slug && itemInfo.product.slug !== '-'
+                    ? `${itemInfo.product.slug}/`
+                    : ''
+            }`}`
+        );
     };
     const parseInventory = () => {
-        const inventory = props.itemInfo.product.inventory;
-        const INVENTORY_COLOR_MAP: Array<'error' | 'warning' | 'success'> = [
-            'error',
-            'warning',
-            'success',
-        ];
-        const INVENTORY_MSG_MAP = [
-            'Out of stock',
-            `Only ${inventory} left in stock`,
-            'In stock',
-        ];
+        const inventory = itemInfo.product.inventory;
+        const INVENTORY_MSG_MAP = getInventoryMsgMap(inventory);
 
         let level = INVENTORY_COLOR_MAP[0];
         let msg = INVENTORY_MSG_MAP[0];
@@ -109,18 +107,18 @@ const CartItem: React.FC<CartItemProps> = (props) => {
             (newQuantity: number) =>
                 updateCartItem({
                     cart_id: String(cartId),
-                    cart_item_id: props.itemInfo.id,
+                    cart_item_id: itemInfo.id,
                     payload: { quantity: newQuantity },
                 }),
             500
         );
-    }, [cartId, props.itemInfo.id, updateCartItem]);
+    }, [cartId, itemInfo.id, updateCartItem]);
 
     useEffect(() => {
-        if (quantity !== props.itemInfo.quantity) {
+        if (quantity !== itemInfo.quantity) {
             debouncedUpdateCart(quantity);
         }
-    }, [quantity, debouncedUpdateCart, props.itemInfo.quantity]);
+    }, [quantity, debouncedUpdateCart, itemInfo.quantity]);
 
     const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -129,7 +127,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     const handleConfirm = () => {
         deleteCartItem({
             cart_id: cartId || '',
-            cart_item_id: props.itemInfo.id,
+            cart_item_id: itemInfo.id,
         });
     };
 
@@ -154,7 +152,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
             >
                 <CardActionArea sx={{ flexBasis: '20%' }}>
                     <Typography variant='h5'>
-                        {props.itemInfo.product.title}
+                        {itemInfo.product.title}
                     </Typography>
                 </CardActionArea>
                 {parseInventory()}
@@ -208,7 +206,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
                 </Box>
             </CardContent>
             <Typography variant='h6' sx={{ flex: '1 1 10%' }}>
-                ${props.itemInfo.total_price}
+                ${itemInfo.total_price}
             </Typography>
         </Card>
     );

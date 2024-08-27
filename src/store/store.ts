@@ -6,17 +6,10 @@ import addressApiSlice from './addressApiSlice';
 import customerApiSlice from './customerApiSlice';
 import orderApiSlice from './orderApiSlice';
 import productApiSlice from './productApiSlice';
+import rootReducer from './rootReducer';
 
 const store = configureStore({
-    reducer: {
-        [cartApiSlice.reducerPath]: cartApiSlice.reducer,
-        [loginApiSlice.reducerPath]: loginApiSlice.reducer,
-        [collectionApiSlice.reducerPath]: collectionApiSlice.reducer,
-        [addressApiSlice.reducerPath]: addressApiSlice.reducer,
-        [customerApiSlice.reducerPath]: customerApiSlice.reducer,
-        [orderApiSlice.reducerPath]: orderApiSlice.reducer,
-        [productApiSlice.reducerPath]: productApiSlice.reducer,
-    },
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
             .concat(cartApiSlice.middleware)
@@ -30,3 +23,5 @@ const store = configureStore({
 });
 
 export default store;
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;

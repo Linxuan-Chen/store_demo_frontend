@@ -6,11 +6,12 @@ export interface CreateNewCart {
     id: string;
 }
 
-interface SimpleProduct {
+export interface SimpleProduct {
     id: number;
     title: string;
     inventory: number;
     unit_price: number;
+    slug: string;
 }
 
 export interface CartItem {
@@ -33,6 +34,19 @@ export interface UpdateCartItemParams {
     payload: {
         quantity: number;
     };
+}
+
+export interface AddCartItemParams {
+    cart_id: string;
+    payload: {
+        product_id: number;
+        quantity: number;
+    };
+}
+export interface AddCartItemResponse {
+    id: number;
+    product_id: number;
+    quantity: number;
 }
 
 export interface DeleteCartItemParams {

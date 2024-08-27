@@ -32,6 +32,11 @@ const loginApiSlice = createApi({
                 url: 'logout/',
                 method: 'POST',
             }),
+            onQueryStarted(arg, api) {
+                api.queryFulfilled
+                    .then(() => window.location.reload())
+                    .catch(() => {});
+            },
         }),
         refreshToken: builder.mutation<void, void>({
             query: () => ({
@@ -76,6 +81,6 @@ export const {
     useMergeCartMutation,
     useLazyCheckUsernameAvailablilityQuery,
     useUserSignUpMutation,
-    util
+    util,
 } = loginApiSlice;
 export default loginApiSlice;

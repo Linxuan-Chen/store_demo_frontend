@@ -13,6 +13,19 @@ export interface CustomerResponse {
     } | null;
     addresses: AddressesResponse;
 }
+export interface UpdateCurrentCustomerResponse {
+    id: number;
+    user_id: number;
+    first_name: string;
+    last_name: string;
+    membership: 'G' | 'S' | 'B';
+    customer_details: {
+        phone: string;
+        birth_date: string;
+        email: string;
+    } | null;
+    address: AddressesResponse[number];
+}
 
 export interface UpdateCustomerPayload {
     customer_id: number;

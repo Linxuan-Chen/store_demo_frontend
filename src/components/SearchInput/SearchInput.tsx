@@ -38,7 +38,7 @@ const SearchInput: React.FC = (props) => {
 
     const handleClickSearch = () => {
         if (searchKeyword) {
-            navigate(`/?title=${searchKeyword}`);
+            navigate(`/?title=${searchKeyword}&page=1`);
         } else {
             navigate('/');
         }
@@ -50,7 +50,7 @@ const SearchInput: React.FC = (props) => {
     ) => {
         setSearchKeyword(value || '');
         if (value) {
-            navigate(`/?title=${value}`);
+            navigate(`/?title=${value}&page=1`);
         }
     };
 
@@ -63,7 +63,7 @@ const SearchInput: React.FC = (props) => {
             // Prevent's default 'Enter' behavior.
             event.defaultMuiPrevented = true;
             if (searchKeyword) {
-                navigate(`/?title=${searchKeyword}`);
+                navigate(`/?title=${searchKeyword}&page=1`);
             } else {
                 navigate('/');
             }

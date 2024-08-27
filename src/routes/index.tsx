@@ -15,6 +15,7 @@ import Address from '../pages/account/Address';
 import Orders from '../pages/account/Orders';
 import Profile from '../pages/account/Profile';
 import AccountRouter from '../pages/account/AccountRouter';
+import ProductDetails from '../pages/product/ProductDetails';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -30,6 +31,10 @@ const router = createBrowserRouter(
                 <Route path='profile/' element={<Profile />} />
                 <Route path='address/' element={<Address />} />
             </Route>
+            <Route
+                path='/product/:product_id/:slug?'
+                element={<ProductDetails />}
+            />
         </Route>
     )
 );

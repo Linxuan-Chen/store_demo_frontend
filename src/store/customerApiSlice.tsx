@@ -7,6 +7,7 @@ import type {
     CustomerResponse,
     UpdateCustomerPayload,
     UpdateCurrentCustomerPayload,
+    UpdateCurrentCustomerResponse
 } from '../types/api/customerApiTypes';
 import { util as accountUtil } from './accountApiSlice';
 import { util as addressUtil } from './addressApiSlice';
@@ -17,7 +18,12 @@ const customerApiSlice = createApi({
         baseUrl: '/api/store/customers/',
         credentials: 'include',
     }),
-    tagTypes: ['CurrentCustomer', 'CustomerInfo', 'CurrentUser', 'CurrentAddress'],
+    tagTypes: [
+        'CurrentCustomer',
+        'CustomerInfo',
+        'CurrentUser',
+        'CurrentAddress',
+    ],
     endpoints: (builder) => ({
         currentCustomer: builder.query<CustomerResponse, void>({
             query: () => 'current_user/',
@@ -62,7 +68,7 @@ const customerApiSlice = createApi({
                 });
             },
         }),
-        updateCustomer: builder.mutation<void, UpdateCustomerPayload>({
+        updateCustomer: builder.mutation<UpdateCurrentCustomerResponse, UpdateCustomerPayload>({
             query: (params: UpdateCustomerPayload) => ({
                 url: `${params.customer_id}/`,
                 method: 'PATCH',

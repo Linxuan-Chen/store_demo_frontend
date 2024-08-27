@@ -10,6 +10,8 @@ import type {
     UpdateCartItemParams,
     DeleteCartItemParams,
     BulkDeleteCartItemParams,
+    AddCartItemParams,
+    AddCartItemResponse,
 } from '../types/api/cartApiTypes';
 
 const cartApiSlice = createApi({
@@ -87,6 +89,22 @@ const cartApiSlice = createApi({
                 { type: 'CartCount', id: 'CART_COUNT' },
             ],
         }),
+        addCartItem: builder.mutation<AddCartItemResponse, AddCartItemParams>({
+            query: (params) => ({
+                url: `cart/${params.cart_id}/items/`,
+                method: 'POST',
+                body: params.payload,
+            }),
+            invalidatesTags: (result, error, params) => {
+                if (result) {
+                    return [
+                        { type: 'Cart', id: 'CART' },
+                        { type: 'CartCount', id: 'CART_COUNT' },
+                    ];
+                }
+                return [];
+            },
+        }),
     }),
 });
 
@@ -97,6 +115,7 @@ export const {
     useUpdateCartItemMutation,
     useDeleteCartItemMutation,
     useBulkDeleteCartItemMutation,
+    useAddCartItemMutation,
     util,
 } = cartApiSlice;
 export default cartApiSlice;

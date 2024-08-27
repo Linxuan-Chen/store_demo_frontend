@@ -13,13 +13,14 @@ import {
     useRefreshTokenMutation,
     useLogoutMutation,
 } from '../../store/accountApiSlice';
-import { useGetAddressesQuery } from '../../store/addressApiSlice';
 import ShoppingCartIcon from '../../components/Buttons/ShoppingCartIcon/ShoppingCartIcon';
 import TabularNavBar from '../../components/TabularNavBar/TabularNavBar';
 import storeLogo from '../../assets/logo.png';
 import styles from './Layout.module.scss';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import SearchInput from '../../components/SearchInput/SearchInput';
+import { useDispatch } from 'react-redux';
+import { setCartId as reduxSetCartId } from '../../store/cartSlice';
 
 /**
  * @description: This component renders the main layout, it includes the top nav bar,
@@ -27,6 +28,7 @@ import SearchInput from '../../components/SearchInput/SearchInput';
  */
 export default function Layout() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [cartId, setCartId] = useState(localStorage.getItem('cart_id'));
     const [welcomeMsg, setWelcomeMsg] = useState('Hello, \nplease sign in');
     const { data: countData, refetch: refetchCount } = useGetCartItemCountQuery(
@@ -130,11 +132,13 @@ export default function Layout() {
         if (isLoggedIn) {
             const newCartId = userStatus ? String(userStatus.cart_id) : null;
             setCartId(newCartId);
+            dispatch(reduxSetCartId(newCartId));
         } else {
             const newCartId = localStorage.getItem('cart_id');
             setCartId(newCartId);
+            dispatch(reduxSetCartId(newCartId));
         }
-    }, [isLoggedIn, userStatus]);
+    }, [isLoggedIn, userStatus, dispatch]);
 
     /**
      * @description: Render welcome message displayed in account menu
@@ -160,8 +164,9 @@ export default function Layout() {
             const newCartId = createCartData.id;
             localStorage.setItem('cart_id', newCartId);
             setCartId(newCartId);
+            dispatch(reduxSetCartId(newCartId));
         }
-    }, [isCreateCartSuccess, createCartData]);
+    }, [isCreateCartSuccess, createCartData, dispatch]);
 
     const handleClickAccountMenu = (
         event: React.MouseEvent<HTMLButtonElement>
@@ -246,15 +251,17 @@ export default function Layout() {
                                 Sign in
                             </Typography>
                         </MenuItem>
-                        <MenuItem
-                            aria-labelledby='logout'
-                            onClick={handleSignOut}
-                        >
-                            <LogoutIcon />
-                            <Typography sx={{ paddingLeft: 2 }}>
-                                Sign Out
-                            </Typography>
-                        </MenuItem>
+                        {isLoggedIn && (
+                            <MenuItem
+                                aria-labelledby='logout'
+                                onClick={handleSignOut}
+                            >
+                                <LogoutIcon />
+                                <Typography sx={{ paddingLeft: 2 }}>
+                                    Sign Out
+                                </Typography>
+                            </MenuItem>
+                        )}
                     </Menu>
                 </Box>
                 <Button
