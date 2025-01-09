@@ -10,9 +10,9 @@
         color: $white;
         flex: 1 1;
         border-color: $blue-gray;
+        white-space: nowrap;
         &:hover {
             border-color: $white;
         }
-        white-space: nowrap;
     }
 }
