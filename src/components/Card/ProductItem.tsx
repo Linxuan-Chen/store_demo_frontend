@@ -9,7 +9,7 @@ import {
     Box,
 } from '@mui/material';
 import type { Product } from '../../types/api/productApiTypes';
-import PlaceholderImage from '../../assets/placeholder-images-image_large.webp';
+import placeholderImage from '../../assets/placeholder.webp';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store/store';
 import {
@@ -98,6 +98,9 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
     };
     const disableBtn = !cartData;
 
+    const isDevMode = process.env.NODE_ENV;
+    const cloudfrontPlaceholderImg = `${process.env.REACT_APP_CLOUDFRONT_URL}/placeholder.webp`;
+
     return (
         <>
             <Alert
@@ -124,7 +127,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
                 >
                     <CardMedia
                         component='img'
-                        src={product.images[0]?.image || PlaceholderImage}
+                        src={product.images[0]?.image || (isDevMode ? placeholderImage : cloudfrontPlaceholderImg)}
                         sx={{
                             maxHeight: '100px',
                             objectFit: 'cover',

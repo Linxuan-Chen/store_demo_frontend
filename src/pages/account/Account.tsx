@@ -2,28 +2,33 @@ import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Paper, Typography, Box, Grid } from '@mui/material';
 import AccountItem from '../../components/Card/AccountItem';
-import AccountOrderIcon from '../../assets/account_order_icon.png';
-import AccountAddressesIcon from '../../assets/account_addresses_icon.png';
-import AccountProfileIcon from '../../assets/account_profile_icon.png';
+import accountOrderIcon from '../../assets/account_order_icon.webp';
+import accountAddressesIcon from '../../assets/account_addresses_icon.webp';
+import accountProfileIcon from '../../assets/account_profile_icon.webp';
 import type { AccountItemProps } from '../../components/Card/AccountItem';
 
 const Profile: React.FC = () => {
+    const isDevMode = process.env.NODE_ENV;
+    const cloudfrontaccountOrderIcon = `${process.env.REACT_APP_CLOUDFRONT_URL}/account_order_icon.webp`;
+    const cloudfrontaccountAddressesIcon = `${process.env.REACT_APP_CLOUDFRONT_URL}/account_addresses_icon.webp`;
+    const cloudfrontaccountProfileIcon = `${process.env.REACT_APP_CLOUDFRONT_URL}/account_profile_icon.webp`;
+
     const MENU_ITEM_META: AccountItemProps[] = [
         {
             title: 'Your Orders',
-            img: AccountOrderIcon,
+            img: isDevMode ? accountOrderIcon : cloudfrontaccountOrderIcon,
             tagetPageUrl: 'orders/',
             description: 'Review your orders'
         },
         {
             title: 'Your Profile',
-            img: AccountProfileIcon,
+            img: isDevMode ? accountAddressesIcon : cloudfrontaccountAddressesIcon,
             tagetPageUrl: 'profile/',
             description: 'Manage password, email, birth date or mobile phone'
         },
         {
             title: 'Your Addresses',
-            img: AccountAddressesIcon,
+            img: isDevMode ? accountProfileIcon : cloudfrontaccountProfileIcon,
             tagetPageUrl: 'address/',
             description: 'Manage addresses'
         },

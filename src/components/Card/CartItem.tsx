@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import productPlaceHolderImg from '../../assets/placeholder-images-image_large.webp';
+import placeHolderImg from '../../assets/placeholder.webp';
 import type { CartItem as CartItemTypes } from '../../types/api/cartApiTypes';
 import { alpha } from '@mui/material/styles';
 import {
@@ -135,13 +135,16 @@ const CartItem: React.FC<CartItemProps> = ({ itemInfo }) => {
         setAnchorEl(null);
     };
 
+    const isDevMode = process.env.NODE_ENV;
+    const cloudfrontPlaceholderImg = `${process.env.REACT_APP_CLOUDFRONT_URL}/placeholder.webp`;
+
     return (
         <Card sx={{ display: 'flex' }}>
             <CardActionArea
                 onClick={handleClickProduct}
                 sx={{ minWidth: '100px', height: '250px' , flex: '1 1 20%' }}
             >
-                <CardMedia image={itemInfo.product.images[0]?.image || productPlaceHolderImg} component='img' />
+                <CardMedia image={itemInfo.product.images[0]?.image || (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)} component='img' />
             </CardActionArea>
             <CardContent
                 sx={{

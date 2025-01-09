@@ -15,7 +15,7 @@ import Alert from '../../components/Alert/Alert';
 import { useGetCartInfoQuery } from '../../store/cartApiSlice';
 import { useParams } from 'react-router-dom';
 import { usePlaceOrderMutation } from '../../store/orderApiSlice';
-import productPlaceHolderImg from '../../assets/placeholder-images-image_large.webp';
+import placeHolderImg from '../../assets/placeholder.webp';
 import { useNavigate } from 'react-router-dom';
 import ReadOnlyCartItem from '../../components/Card/ReadOnlyCartItem';
 import { SimpleProduct } from '../../types/api/cartApiTypes';
@@ -66,6 +66,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
         setShowAlert((prev) => ({ ...prev, show: true }));
     };
 
+    const isDevMode = process.env.NODE_ENV;
+    const cloudfrontPlaceholderImg = `${process.env.REACT_APP_CLOUDFRONT_URL}/placeholder.webp`;
+
     return (
         <Box
             sx={{
@@ -107,7 +110,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
                                         }
                                         quantity={item.quantity}
                                         title={item.product.title}
-                                        image={item.product.images[0]?.image || productPlaceHolderImg}
+                                        image={item.product.images[0]?.image || (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)}
                                     />
                                 ))}
                         </Box>

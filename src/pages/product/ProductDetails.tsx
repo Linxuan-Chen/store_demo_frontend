@@ -11,7 +11,7 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import PlaceHolderImg from '../../assets/placeholder-images-image_large.webp';
+import placeHolderImg from '../../assets/placeholder.webp';
 import { useGetAProductQuery } from '../../store/productApiSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getInventoryMsgMap, INVENTORY_COLOR_MAP } from '../../utils/constant';
@@ -120,6 +120,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
             }
         }
     };
+
+    const isDevMode = process.env.NODE_ENV;
+    const cloudfrontPlaceholderImg = `${process.env.REACT_APP_CLOUDFRONT_URL}/placeholder.webp`;
+    
     return (
         <>
             <Alert
@@ -131,7 +135,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
                 <Card sx={{ display: 'flex', marginTop: 3 }}>
                     <CardMedia
                         component='img'
-                        src={productData.images[0]?.image || PlaceHolderImg}
+                        src={productData.images[0]?.image || (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)}
                         sx={{ flexBasis: '30%', height: '300px', maxWidth: '400px', objectFit: 'cover' }}
                     />
                     <CardContent

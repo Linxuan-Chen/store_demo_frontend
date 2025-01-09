@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useGetOrderQuery } from '../../store/orderApiSlice';
 import ReadOnlyCartItem from '../../components/Card/ReadOnlyCartItem';
 import { Box, Card, CardContent, Typography, Pagination } from '@mui/material';
-import PlaceHolderImage from '../../assets/placeholder-images-image_large.webp';
+import placeHolderImg from '../../assets/placeholder.webp';
 import moment from 'moment';
 
 const Orders: React.FC = (props) => {
@@ -19,6 +19,9 @@ const Orders: React.FC = (props) => {
     useEffect(() => {
         refetchOrder();
     }, [page, refetchOrder]);
+
+    const isDevMode = process.env.NODE_ENV;
+    const cloudfrontPlaceholderImg = `${process.env.REACT_APP_CLOUDFRONT_URL}/placeholder.webp`;
 
     return (
         <>
@@ -73,7 +76,7 @@ const Orders: React.FC = (props) => {
                                     id={item.id}
                                     title={item.product_title}
                                     onClick={() => handleClickProduct(item.id)}
-                                    image={item.image.image || PlaceHolderImage}
+                                    image={item.image.image || (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)}
                                     quantity={item.quantity}
                                 />
                             ))}
