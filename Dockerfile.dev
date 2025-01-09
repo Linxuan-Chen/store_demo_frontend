@@ -7,4 +7,10 @@ RUN ["npm", "install"]
 
 COPY . .
 
+ENV REACT_APP_CLOUDFRONT_URL=https://d24m1jw4p6pn47.cloudfront.net/front_end_assets
+
+ENV NODE_ENV=development
+
+EXPOSE 3000
+
 CMD ["npm", "start"]

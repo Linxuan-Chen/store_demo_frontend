@@ -16,6 +16,8 @@ COPY ./build /usr/share/nginx/html
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
+ENV REACT_APP_CLOUDFRONT_URL=https://d24m1jw4p6pn47.cloudfront.net/front_end_assets
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
