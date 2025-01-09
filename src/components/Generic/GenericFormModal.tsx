@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { Dialog, Paper } from '@mui/material';
+import { Dialog } from '@mui/material';
 import GenericForm, { GenericFormProps } from './GenericForm';
 
 interface GenericFormModalProps {

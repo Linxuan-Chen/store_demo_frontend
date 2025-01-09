@@ -26,7 +26,10 @@ interface ResetStateAction {
     type: 'RESET_STORE';
 }
 
-const rootReducer = (state: RootState | undefined, action: ResetStateAction) => {
+const rootReducer = (
+    state: RootState | undefined,
+    action: ResetStateAction
+) => {
     if (action.type === 'RESET_STORE') {
         return appReducer(undefined, action);
     }

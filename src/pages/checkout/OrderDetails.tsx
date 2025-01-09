@@ -1,16 +1,5 @@
-import { useState, useEffect } from 'react';
-import {
-    Paper,
-    Card,
-    CardMedia,
-    CardActionArea,
-    CardContent,
-    Typography,
-    Box,
-    Divider,
-    FormLabel,
-    Button,
-} from '@mui/material';
+import { useState } from 'react';
+import { Paper, Box, FormLabel, Button } from '@mui/material';
 import Alert from '../../components/Alert/Alert';
 import { useGetCartInfoQuery } from '../../store/cartApiSlice';
 import { useParams } from 'react-router-dom';
@@ -110,7 +99,12 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ selectedAddress }) => {
                                         }
                                         quantity={item.quantity}
                                         title={item.product.title}
-                                        image={item.product.images[0]?.image || (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)}
+                                        image={
+                                            item.product.images[0]?.image ||
+                                            (isDevMode
+                                                ? placeHolderImg
+                                                : cloudfrontPlaceholderImg)
+                                        }
                                     />
                                 ))}
                         </Box>

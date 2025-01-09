@@ -7,7 +7,7 @@ import type {
     CustomerResponse,
     UpdateCustomerPayload,
     UpdateCurrentCustomerPayload,
-    UpdateCurrentCustomerResponse
+    UpdateCurrentCustomerResponse,
 } from '../types/api/customerApiTypes';
 import { util as accountUtil } from './accountApiSlice';
 import { util as addressUtil } from './addressApiSlice';
@@ -68,7 +68,10 @@ const customerApiSlice = createApi({
                 });
             },
         }),
-        updateCustomer: builder.mutation<UpdateCurrentCustomerResponse, UpdateCustomerPayload>({
+        updateCustomer: builder.mutation<
+            UpdateCurrentCustomerResponse,
+            UpdateCustomerPayload
+        >({
             query: (params: UpdateCustomerPayload) => ({
                 url: `${params.customer_id}/`,
                 method: 'PATCH',

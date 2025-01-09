@@ -4,8 +4,6 @@ import {
     InputAdornment,
     IconButton,
     Autocomplete,
-    AutocompleteProps,
-    UseAutocompleteProps,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useLazyFetchSuggestionsQuery } from '../../store/productApiSlice';

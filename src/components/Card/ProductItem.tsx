@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
     Card,
     CardActionArea,
@@ -127,7 +127,12 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
                 >
                     <CardMedia
                         component='img'
-                        src={product.images[0]?.image || (isDevMode ? placeholderImage : cloudfrontPlaceholderImg)}
+                        src={
+                            product.images[0]?.image ||
+                            (isDevMode
+                                ? placeholderImage
+                                : cloudfrontPlaceholderImg)
+                        }
                         sx={{
                             maxHeight: '100px',
                             objectFit: 'cover',

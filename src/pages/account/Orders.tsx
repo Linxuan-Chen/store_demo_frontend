@@ -76,7 +76,12 @@ const Orders: React.FC = (props) => {
                                     id={item.id}
                                     title={item.product_title}
                                     onClick={() => handleClickProduct(item.id)}
-                                    image={item.image.image || (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)}
+                                    image={
+                                        item.image.image ||
+                                        (isDevMode
+                                            ? placeHolderImg
+                                            : cloudfrontPlaceholderImg)
+                                    }
                                     quantity={item.quantity}
                                 />
                             ))}

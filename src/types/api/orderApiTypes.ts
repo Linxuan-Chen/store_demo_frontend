@@ -1,4 +1,4 @@
-import { ProductImageType } from "./productApiTypes";
+import { ProductImageType } from './productApiTypes';
 
 export interface PlaceOrderParams {
     cart_id: string;

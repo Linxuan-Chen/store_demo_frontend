@@ -67,6 +67,6 @@ export const {
     useGetAddressesQuery,
     useUpdateAddressMutation,
     useDeleteAddressMutation,
-    util
+    util,
 } = addressApiSlice;
 export default addressApiSlice;

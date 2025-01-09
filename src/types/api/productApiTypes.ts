@@ -15,7 +15,7 @@ export interface Product {
     slug: string;
     title: string;
     unit_price: number;
-    images: ProductImageType
+    images: ProductImageType;
 }
 export interface GetProductsResponse {
     count: number;

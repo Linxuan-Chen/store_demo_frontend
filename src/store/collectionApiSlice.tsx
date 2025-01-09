@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { CollectionListResponse } from '../types/api/collectionApiTypes';
 
-
 const collectionApiSlice = createApi({
     reducerPath: 'collectionApi',
     baseQuery: fetchBaseQuery({
@@ -9,7 +8,7 @@ const collectionApiSlice = createApi({
         credentials: 'include',
     }),
     endpoints: (builder) => ({
-        getCollectionList: builder.query<CollectionListResponse[],void>({
+        getCollectionList: builder.query<CollectionListResponse[], void>({
             query: () => 'collections/',
         }),
     }),

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
     Card,
@@ -142,9 +142,15 @@ const CartItem: React.FC<CartItemProps> = ({ itemInfo }) => {
         <Card sx={{ display: 'flex' }}>
             <CardActionArea
                 onClick={handleClickProduct}
-                sx={{ minWidth: '100px', height: '250px' , flex: '1 1 20%' }}
+                sx={{ minWidth: '100px', height: '250px', flex: '1 1 20%' }}
             >
-                <CardMedia image={itemInfo.product.images[0]?.image || (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)} component='img' />
+                <CardMedia
+                    image={
+                        itemInfo.product.images[0]?.image ||
+                        (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)
+                    }
+                    component='img'
+                />
             </CardActionArea>
             <CardContent
                 sx={{

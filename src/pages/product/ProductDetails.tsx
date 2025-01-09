@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Button,
@@ -123,7 +123,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
 
     const isDevMode = process.env.NODE_ENV;
     const cloudfrontPlaceholderImg = `${process.env.REACT_APP_CLOUDFRONT_URL}/placeholder.webp`;
-    
+
     return (
         <>
             <Alert
@@ -135,8 +135,18 @@ const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
                 <Card sx={{ display: 'flex', marginTop: 3 }}>
                     <CardMedia
                         component='img'
-                        src={productData.images[0]?.image || (isDevMode ? placeHolderImg : cloudfrontPlaceholderImg)}
-                        sx={{ flexBasis: '30%', height: '300px', maxWidth: '400px', objectFit: 'cover' }}
+                        src={
+                            productData.images[0]?.image ||
+                            (isDevMode
+                                ? placeHolderImg
+                                : cloudfrontPlaceholderImg)
+                        }
+                        sx={{
+                            flexBasis: '30%',
+                            height: '300px',
+                            maxWidth: '400px',
+                            objectFit: 'cover',
+                        }}
                     />
                     <CardContent
                         sx={{ display: 'flex', flexDirection: 'column' }}

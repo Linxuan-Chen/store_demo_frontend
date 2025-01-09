@@ -209,7 +209,11 @@ export default function Layout() {
                 >
                     <img
                         className={styles.storeLogo}
-                        src={isDevMode ? storeLogo : `${CLOUDFRONT_URL}/logo.webp`}
+                        src={
+                            isDevMode
+                                ? storeLogo
+                                : `${CLOUDFRONT_URL}/logo.webp`
+                        }
                         alt='store logo'
                     />
                 </Button>
