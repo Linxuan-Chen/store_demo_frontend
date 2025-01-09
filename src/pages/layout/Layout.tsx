@@ -15,7 +15,7 @@ import {
 } from '../../store/accountApiSlice';
 import ShoppingCartIcon from '../../components/Buttons/ShoppingCartIcon/ShoppingCartIcon';
 import TabularNavBar from '../../components/TabularNavBar/TabularNavBar';
-import storeLogo from '../../assets/logo.png';
+import storeLogo from '../../assets/logo.webp';
 import styles from './Layout.module.scss';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import SearchInput from '../../components/SearchInput/SearchInput';
@@ -196,6 +196,10 @@ export default function Layout() {
         navigate('/login/');
     };
 
+    const isDevMode = process.env.NODE_ENV === 'development';
+
+    const CLOUDFRONT_URL = process.env.REACT_APP_CLOUDFRONT_URL;
+
     return (
         <>
             <Box component='nav' className={styles.navBarTop}>
@@ -205,7 +209,7 @@ export default function Layout() {
                 >
                     <img
                         className={styles.storeLogo}
-                        src={storeLogo}
+                        src={isDevMode ? storeLogo : `${CLOUDFRONT_URL}/logo.webp`}
                         alt='store logo'
                     />
                 </Button>
