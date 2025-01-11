@@ -15,11 +15,11 @@ Run the following command on your local machine to generate the production-ready
     -   \<image-name>: (string) The name of the Docker image
     -   \<tag>: (string) The tag of the Docker image
     -   \<path>: (string) Path of root directory of the source code
-        example: `docker build -t demo-store-frontend:1.0.0 -f Dockerfile.dev .` to start a container in devlopment mode
+    -    example: `docker build -t demo-store-frontend:1.0.0 -f Dockerfile.dev .` to start a container in devlopment mode
 -   run `docker run -p <host-port>:3000 --name <container-name> <image-name>:<tag>` to run the image in an isolated development container
     -   \<host-port>: (number) host port
     -   \<container-name>: (string) container name
-        example: `docker run -p 3000:3000 --name frontend demo-store-frontend:1.0.0`
+    -    example: `docker run -p 3000:3000 --name frontend demo-store-frontend:1.0.0`
 
 ## Backend source code can be found [here](https://github.com/Linxuan-Chen/store_demo_backend)
 
