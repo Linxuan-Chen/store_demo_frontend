@@ -1,46 +1,27 @@
-# Getting Started with Create React App
+# Demo Store
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is created to demonstrate my web development skills. It is a private project, and all rights are reserved. Redistribution, modification, or commercial use of any part of this project is strictly prohibited without the explicit written permission of the author.
 
-## Available Scripts
+## Devlopment Instructions
 
-In the project directory, you can run:
+-   Run `npm install` to install dependencies.
+-   Run `npm start` to start the project listening on port 3000.
 
-### `npm start`
+## Deployment Instructions
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Run the following command on your local machine to generate the production-ready bundle before uploading the files. This step reduces the workload on the AWS EC2 instance.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-   Run `docker build -t <image-name>:<tag> -f <Dockerfile-path> <path>` to build an docker image
+    -   \<image-name>: (string) The name of the Docker image
+    -   \<tag>: (string) The tag of the Docker image
+    -   \<path>: (string) Path of root directory of the source code
+        example: `docker build -t demo-store-frontend:1.0.0 -f Dockerfile.dev .` to start a container in devlopment mode
+-   run `docker run -p <host-port>:3000 --name <container-name> <image-name>:<tag>` to run the image in an isolated development container
+    -   \<host-port>: (number) host port
+    -   \<container-name>: (string) container name
+        example: `docker run -p 3000:3000 --name frontend demo-store-frontend:1.0.0`
 
-### `npm test`
+## Backend source code can be found [here](https://github.com/Linxuan-Chen/store_demo_backend)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Integration using Docker Compose
+The project utilizes Docker Compose to facilitate the integration of multiple services. The docker-compose.yml file can be found [here](https://github.com/Linxuan-Chen/store_demo_docker_compose_yml).
