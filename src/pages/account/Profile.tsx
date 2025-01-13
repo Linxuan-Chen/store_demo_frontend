@@ -50,6 +50,12 @@ const Profile: React.FC = (props) => {
         msg: PROFILE_CHANGE_SUCCESS_MSG,
     });
 
+    useEffect(() => {
+        if (showAlert.show && showAlert.severity === 'success') {
+            setTimeout(() => navigate('/my-account/'), 500)
+        }
+    }, [showAlert, navigate])
+
     const form = useForm<FieldValues>({
         resolver: yupResolver(schema),
         defaultValues: {
