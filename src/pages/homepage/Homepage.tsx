@@ -39,6 +39,8 @@ export default function Homepage() {
         navigate(newUrl);
     };
 
+    console.log(productsData)
+
     return (
         <Box
             sx={{
@@ -105,7 +107,7 @@ export default function Homepage() {
                     </Box>
                 ))}
 
-            {/* Collection Page */}
+            {/* Collection Details Page */}
             {(title || collection) &&
             productsData &&
             productsData.results.length > 0 ? (
@@ -155,7 +157,7 @@ export default function Homepage() {
                         />
                     </Box>
                 </Box>
-            ) : (
+            ) : productsData !== undefined && (
                 <Box>
                     <Typography variant='h3'>{collection}</Typography>
                     <Typography>No Product</Typography>
