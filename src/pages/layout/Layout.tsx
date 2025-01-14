@@ -307,8 +307,8 @@ export default function Layout() {
             </Box>
             <Box component='footer' className={styles.footer}>
                 <p>
-                    This project is a demo store, you can view front-end source
-                    code{' '}
+                    This project is a demo store, you can access front-end
+                    source code{' '}
                     <Link
                         href='https://github.com/Linxuan-Chen/store_demo_frontend'
                         target='_blank'
@@ -326,6 +326,19 @@ export default function Layout() {
                     >
                         here
                     </Link>
+                    .
+                </p>
+                <p>
+                    {'\u00A0'} To log in to the admin panel, visit {' '}
+                    <Link
+                        href={`${window.location.origin}/admin/`}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        underline='hover'
+                    >
+                        {window.location.origin}/admin/
+                    </Link>{' '}
+                    using the username and psw: demouser
                 </p>
             </Box>
         </>
