@@ -2,10 +2,18 @@
 
 This project is created to demonstrate my web development skills. It is a private project, and all rights are reserved. Redistribution, modification, or commercial use of any part of this project is strictly prohibited without the explicit written permission of the author.
 
+## Tech Stack
+- React + Redux + React Router
+- Nginx
+- Docker
+
 ## Super user account for demonstration purposes and admin page access
+Visit [http://35.183.186.59/](http://35.183.186.59/) to access the main page with:
+- Username and password: demouser
+- The order confirmation email will be sent to a mock email address
 
 Visit [http://35.183.186.59/admin/](http://35.183.186.59/admin/) to access the admin panel with:
-- Username: demouser
+- Username and password: demouser
 
 ## Devlopment Instructions
 
